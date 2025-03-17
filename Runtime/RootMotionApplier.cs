@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Anima
 {
-    public partial class CharacterAnimator
+    public partial class AnimatorPlayer
     {
         [SerializeField] Transform _rootMotionTarget;
 

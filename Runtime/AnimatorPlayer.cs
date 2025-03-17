@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Anima
 {
-    public partial class CharacterAnimator : MonoBehaviour, IAnimator
+    public partial class AnimatorPlayer : MonoBehaviour, IAnimator
     {
         private class AnimationQueue
         {
@@ -37,7 +37,7 @@ namespace Anima
 
         private void Awake()
         {
-            if(!_animator) _animator = GetComponent<Animator>();
+            if (!_animator) _animator = GetComponent<Animator>();
             _layers = new AnimatorLayer[_animator.layerCount];
             for (int i = 0; i < _layers.Length; i++) _layers[i] = new AnimatorLayer();
 
@@ -59,7 +59,7 @@ namespace Anima
             for (int i = 0; i < _layers.Length; i++)
             {
                 _layers[i].Update(_animator);
-                
+
                 if (_usedLayers[i] == false || (_layers[i].playInfo.preserve && IsAnimationFinished(i)))
                 {
                     _layers[i].Stop();
@@ -75,7 +75,7 @@ namespace Anima
 
             List<AnimationQueue> queue;
             int layer;
-            foreach(var pair in _queue)
+            foreach (var pair in _queue)
             {
                 layer = pair.Key;
                 queue = pair.Value;
@@ -100,14 +100,14 @@ namespace Anima
                 }
 
                 //if (_layers[pair.Key].isAnimationFinished) queue.RemoveAt(0);
-                
+
                 //if(queue.Count > 0) PlayNoClearQueue(queue[0].state, queue[0].info);
             }
         }
 
         private void PlayInternal(IAnimationState state, AnimationPlayInfo info, bool clearQueue)
         {
-            if(state is StopAnimationState)
+            if (state is StopAnimationState)
             {
                 Stop(state.layer);
                 return;
@@ -153,7 +153,7 @@ namespace Anima
             }
         }
 
-        private void AppendUsedLayers(IAnimationState state, bool[] layers, int iteration=0)
+        private void AppendUsedLayers(IAnimationState state, bool[] layers, int iteration = 0)
         {
             int layerIndex = state.layer;
             if (layerIndex >= layers.Length) return;
@@ -283,7 +283,7 @@ namespace Anima
 
         public IAnimationState GetCurrentAnimation(int layer)
         {
-            if(_layers == null)
+            if (_layers == null)
             {
                 Awake();
             }
@@ -351,7 +351,7 @@ namespace Anima
             {
                 float normalizedExitTime = 1.0f;
                 if (currentAnimation != null) normalizedExitTime = (currentAnimation.duration - _playInfo.exitRangeSecs) / currentAnimation.duration;
-                if(_changedAnimation && normalizedTime < normalizedExitTime)
+                if (_changedAnimation && normalizedTime < normalizedExitTime)
                 {
                     _changedAnimation = false;
                 }

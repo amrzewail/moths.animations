@@ -44,46 +44,45 @@ namespace Anima
 
     public interface IAnimator
     {
-        event Action<IAnimationState> AnimationPlayed;
+        public event Action<IAnimationState> AnimationPlayed;
 
-        IAnimationState DefaultAnimation { get; }
+        public IAnimationState DefaultAnimation { get; }
 
-        void Play(IAnimationState state);
+        public void Play(IAnimationState state);
 
-        void Play(IAnimationState state, AnimationPlayInfo info);
+        public void Play(IAnimationState state, AnimationPlayInfo info);
 
-        void Queue(IAnimationState state);
-        void Queue(IAnimationState state, AnimationPlayInfo info);
+        public void Queue(IAnimationState state);
+        public void Queue(IAnimationState state, AnimationPlayInfo info);
 
-        void Stop(int layer);
+        public void Stop(int layer);
 
-        void ClearQueue(int layer);
+        public void ClearQueue(int layer);
 
-        bool IsPlaying(IAnimationState state);
+        public bool IsPlaying(IAnimationState state);
 
-        bool IsAnimationFinished(int layer);
+        public bool IsAnimationFinished(int layer);
 
-        float GetNormalizedTime(int layer);
+        public float GetNormalizedTime(int layer);
 
-        void SetNormalizedTime(int layer, float time);
+        public void SetNormalizedTime(int layer, float time);
 
-        IAnimationState GetCurrentAnimation(int layer);
+        public IAnimationState GetCurrentAnimation(int layer);
 
-        void SetRootMotion(bool value);
-        void ResetRootMotion(Transform transform);
+        public void SetRootMotion(bool value);
 
-        void Pause(float pauseTime = 0);
+        public void Pause(float pauseTime = 0);
 
-        void Unpause();
+        public void Unpause();
 
-        void SetSpeed(float speed);
+        public void SetSpeed(float speed);
 
-        void SetFloat(string parameter, float value);
+        //public void ResetRootMotion(IActor actor);
 
-        float GetFloat(string parameter);
+        public void SetFloat(string parameter, float value);
 
-        bool[] GetCurrentPlayingLayers();
+        public float GetFloat(string parameter);
 
-        Transform GetBoneTransform(HumanBodyBones bone);
+        public bool[] GetCurrentPlayingLayers();
     }
 }

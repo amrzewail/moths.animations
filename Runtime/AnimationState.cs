@@ -7,10 +7,8 @@ using UnityEditor.Animations;
 #endif
 
 using Collections.Fields;
-
 namespace Anima
 {
-
     [CreateAssetMenu(fileName = "Animation State", menuName = "Animations/Animation State")]
     public class AnimationState : ScriptableObject, IAnimationState
     {

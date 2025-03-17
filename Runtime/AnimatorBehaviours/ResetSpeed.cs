@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class ResetSpeed : StateMachineBehaviour
+namespace Anima.Behaviours
 {
-    public float defaultSpeed = 1;
-
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class ResetSpeed : StateMachineBehaviour
     {
-        animator.speed = defaultSpeed;
-    }
+        public float defaultSpeed = 1;
 
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.speed = defaultSpeed;
+
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            animator.speed = defaultSpeed;
+        }
+
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            animator.speed = defaultSpeed;
+        }
     }
 }

@@ -68,7 +68,7 @@ namespace Anima.Editor
                 {
                     if (FindState(stateMachine, _stateNameProperty.stringValue, new List<string>(), out selectedState, out statePath))
                     {
-                        _durationProperty.floatValue = AnimationState.CalculateDuration(selectedState.state);
+                        _durationProperty.floatValue = selectedState.state.motion != null ? selectedState.state.motion.averageDuration / selectedState.state.speed : 0;
                     }
                 }
 

@@ -52,6 +52,19 @@ namespace Anima.Internal
             }
 
             string assetPath = AssetDatabase.GetAssetPath(this);
+
+            HashSet<AnimationState> existingAnimations = _references.Select(r => r.state).ToHashSet();
+            var childAssets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
+
+            for (int i = 0; i < childAssets.Length; i++)
+            {
+                var asset = childAssets[i];
+                if (!asset) continue;
+                if (!AssetDatabase.IsSubAsset(asset)) continue;
+                if (existingAnimations.Contains(asset)) continue;
+                AssetDatabase.RemoveObjectFromAsset(asset);
+            }
+
             AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
         }
 
@@ -83,7 +96,7 @@ namespace Anima.Internal
                     EditorUtility.SetDirty(this);
                 }
 
-                animationState.name = state.state.name;
+                animationState.name = $"{state.state.name} ({layer})";
 
                 FieldInfo animatorControllerField = typeof(AnimationState).GetField("_animatorController", BindingFlags.NonPublic | BindingFlags.Instance);
                 FieldInfo layerField = typeof(AnimationState).GetField("_layer", BindingFlags.NonPublic | BindingFlags.Instance);
