@@ -1,0 +1,18 @@
+{
+    "name": "Animations.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:273b482ba4229914a9fed4d3bc218077"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
