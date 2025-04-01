@@ -8,7 +8,7 @@ namespace Anima
 {
     public partial class AnimatorPlayer : MonoBehaviour, IAnimator
     {
-        private class AnimationQueue
+        private struct AnimationQueue
         {
             public IAnimationState state;
             public AnimationPlayInfo info;
@@ -26,7 +26,7 @@ namespace Anima
         private float _isPausedSpeed = 1;
 
 
-        public event Action<IAnimationState> AnimationPlayed;
+        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
 
         [SerializeField] AnimationState _defaultAnimation;
 
@@ -107,7 +107,7 @@ namespace Anima
 
         private void PlayInternal(IAnimationState state, AnimationPlayInfo info, bool clearQueue)
         {
-            if (state is StopAnimationState)
+            if (state.animID == "__StopID__")
             {
                 Stop(state.layer);
                 return;
@@ -130,7 +130,7 @@ namespace Anima
                 var animLayer = _layers[state.layer];
                 if (animLayer.Play(_animator, state.layer, noBlendTimeAnimations, state, info))
                 {
-                    AnimationPlayed?.Invoke(state);
+                    AnimationPlayed?.Invoke(state, info);
                 }
 
                 return;
@@ -364,6 +364,9 @@ namespace Anima
             {
                 if (!IsPlaying(state) || isAnimationFinished || info.forcePlay)
                 {
+
+                    Debug.Log("Play animation: " + state.stateName + " forcePlay: " + info.forcePlay + " finished: " + isAnimationFinished);
+
                     _playInfo = info;
 
                     animator.CrossFadeInFixedTime(state.stateName, noBlendTimeAnimations.Contains(state.stateName) ? 0 : info.blendTime, layer, state.duration * info.normalizedTime);
@@ -404,7 +407,7 @@ namespace Anima
             public bool IsPlaying(IAnimationState state)
             {
                 if (currentAnimation == null) return false;
-                return currentAnimation == state;
+                return currentAnimation.IsEqual(state);
             }
 
         }
