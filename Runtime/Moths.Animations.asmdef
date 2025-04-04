@@ -1,8 +1,8 @@
 {
-    "name": "Animations",
+    "name": "Moths.Animations",
     "rootNamespace": "",
     "references": [
-        "GUID:badfb38e77776364a810b50b49e10d83"
+        "GUID:3c4641a474dbe544aafa49297e96ae9e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

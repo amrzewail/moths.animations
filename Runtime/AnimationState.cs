@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor.Animations;
 #endif
 
-using Collections.Fields;
+using Moths.Fields;
 namespace Anima
 {
     [CreateAssetMenu(fileName = "Animation State", menuName = "Animations/Animation State")]

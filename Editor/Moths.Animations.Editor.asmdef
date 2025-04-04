@@ -1,5 +1,5 @@
 {
-    "name": "Animations.Editor",
+    "name": "Moths.Animations.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:273b482ba4229914a9fed4d3bc218077"
