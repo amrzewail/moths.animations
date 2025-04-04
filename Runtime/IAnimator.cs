@@ -44,7 +44,7 @@ namespace Anima
 
     public interface IAnimator
     {
-        public event Action<IAnimationState> AnimationPlayed;
+        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
 
         public IAnimationState DefaultAnimation { get; }
 

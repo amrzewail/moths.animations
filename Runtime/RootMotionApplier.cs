@@ -6,13 +6,22 @@ namespace Anima
 {
     public partial class AnimatorPlayer
     {
-        [SerializeField] Transform _rootMotionTarget;
+        [System.Flags]
+        public enum Constraint
+        {
+            None = 0, X = 1 << 0, Y = 1 << 1, Z = 1 << 2
+        };
 
-        private Vector3 _deltaPosition;
-        private Quaternion _deltaRotation;
+        [SerializeField] Transform _rootMotionTarget;
+        [SerializeField] Constraint _lockPosition;
+
+        private Vector3 _deltaPosition = Vector3.zero;
+        private Quaternion _deltaRotation = Quaternion.identity;
 
         void OnAnimatorMove()
         {
+            if (!_rootMotionTarget) return;
+
             Quaternion deltaRotation = _animator.deltaRotation;
             Vector3 deltaPosition = _animator.deltaPosition;
 
@@ -22,8 +31,23 @@ namespace Anima
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
 
-            _rootMotionTarget.transform.position += _deltaPosition;
-            _rootMotionTarget.transform.rotation *= _deltaRotation;
+            if ((_lockPosition & Constraint.X) != 0)
+            {
+                _deltaPosition -= transform.right * Vector3.Dot(transform.right, _deltaPosition);
+            }
+
+            if ((_lockPosition & Constraint.Y) != 0)
+            {
+                _deltaPosition -= transform.up * Vector3.Dot(transform.up, _deltaPosition);
+            }
+
+            if ((_lockPosition & Constraint.Z) != 0)
+            {
+                _deltaPosition -= transform.forward * Vector3.Dot(transform.forward, _deltaPosition);
+            }
+
+            _rootMotionTarget.position += _deltaPosition;
+            _rootMotionTarget.rotation *= _deltaRotation;
 
             _deltaPosition = Vector3.zero;
             _deltaRotation = Quaternion.identity;
