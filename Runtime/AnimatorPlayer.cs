@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Anima
+namespace Moths.Animations
 {
     public partial class AnimatorPlayer : MonoBehaviour, IAnimator
     {

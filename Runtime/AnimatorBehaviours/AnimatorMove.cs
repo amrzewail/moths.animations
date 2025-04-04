@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Anima.Behaviours
+namespace Moths.Animations.Behaviours
 {
     public class AnimatorMove : StateMachineBehaviour
     {

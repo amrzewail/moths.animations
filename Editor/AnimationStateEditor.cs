@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace Anima.Editor
+namespace Moths.Animations.Editor
 {
     using Editor = UnityEditor.Editor;
 

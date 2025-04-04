@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Anima
+namespace Moths.Animations
 {
     public struct UAnimationState : IAnimationState
     {

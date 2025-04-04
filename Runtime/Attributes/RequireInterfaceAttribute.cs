@@ -3,7 +3,7 @@ using UnityEngine;
 /// Attribute that require implementation of the provided interface.
 /// </summary>
 /// 
-namespace Anima.Attributes
+namespace Moths.Animations.Attributes
 {
     public class RequireInterfaceAttribute : PropertyAttribute
     {

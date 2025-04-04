@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-namespace Anima.Behaviours
+namespace Moths.Animations.Behaviours
 {
     public class VariableSpeed : StateMachineBehaviour
     {

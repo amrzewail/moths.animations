@@ -7,7 +7,7 @@ using UnityEditor.Animations;
 #endif
 
 using Moths.Fields;
-namespace Anima
+namespace Moths.Animations
 {
     [CreateAssetMenu(fileName = "Animation State", menuName = "Animations/Animation State")]
     public class AnimationState : ScriptableObject, IAnimationState

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Moths.Fields;
-using Anima.Attributes;
+using Moths.Animations.Attributes;
 
-namespace Anima
+namespace Moths.Animations
 {
     [CreateAssetMenu(fileName = "Combine Animation State", menuName = "Animations/Combine Animation State")]
     public class CombineAnimationState : ScriptableObject, IAnimationState

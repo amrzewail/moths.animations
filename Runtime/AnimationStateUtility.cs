@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Anima
+namespace Moths.Animations
 {
     public static class AnimationStateUtility
     {

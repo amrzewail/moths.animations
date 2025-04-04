@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Anima
+namespace Moths.Animations
 {
     public interface IAnimationState
     {
