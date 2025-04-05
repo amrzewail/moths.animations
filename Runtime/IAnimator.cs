@@ -1,3 +1,4 @@
+using Moths.Animations.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,32 +50,29 @@ namespace Moths.Animations
 
     public interface IAnimator
     {
-        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
+        public event Action<UAnimation, AnimationPlayInfo> AnimationPlayed;
+        public UAnimation DefaultAnimation { get; }
 
-        public IAnimationState DefaultAnimation { get; }
+        public bool ApplyRootMotion { get; set; }
 
-        public void Play(IAnimationState state);
+        public void Play<TAnimation>(TAnimation state) where TAnimation : IAnimation;
 
-        public void Play(IAnimationState state, AnimationPlayInfo info);
+        public void Play<TAnimation>(TAnimation state, AnimationPlayInfo info) where TAnimation : IAnimation;
 
-        public void Queue(IAnimationState state);
-        public void Queue(IAnimationState state, AnimationPlayInfo info);
+        public void Queue<TAnimation>(TAnimation state) where TAnimation : IAnimation;
+        public void Queue<TAnimation>(TAnimation state, AnimationPlayInfo info) where TAnimation : IAnimation;
 
-        public void Stop(int layer);
+        public void Stop(AnimLayer layer);
 
-        public void ClearQueue(int layer);
+        public void ClearQueue(AnimLayer layer);
 
-        public bool IsPlaying(IAnimationState state);
+        public bool IsPlaying<TAnimation>(TAnimation state) where TAnimation : IAnimation;
 
-        public bool IsAnimationFinished(int layer);
+        public bool IsAnimationFinished(AnimLayer layer);
 
-        public float GetNormalizedTime(int layer);
+        public float GetNormalizedTime(AnimLayer layer);
 
-        public void SetNormalizedTime(int layer, float time);
-
-        public IAnimationState GetCurrentAnimation(int layer);
-
-        public void SetRootMotion(bool value);
+        public IAnimation GetCurrentAnimation(AnimLayer layer);
 
         public void Pause(float pauseTime = 0);
 
@@ -82,12 +80,8 @@ namespace Moths.Animations
 
         public void SetSpeed(float speed);
 
-        //public void ResetRootMotion(IActor actor);
-
         public void SetFloat(string parameter, float value);
 
         public float GetFloat(string parameter);
-
-        public bool[] GetCurrentPlayingLayers();
     }
 }

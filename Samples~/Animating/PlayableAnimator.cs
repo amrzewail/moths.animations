@@ -12,11 +12,10 @@ namespace Moths.Animations.Samples
     {
         private IAnimator _animator;
 
-        [SerializeField] AnimationState _idle;
-        [SerializeField] AnimationState _walk;
-        [SerializeField] AnimationState _walkCircle;
-        [SerializeField] AnimationState _punch;
-        [SerializeField] AnimationState _jump;
+        [SerializeField] AnimationReference _idle;
+        [SerializeField] AnimationReference _walkCircle;
+        [SerializeField] AnimationReference _punch;
+        [SerializeField] AnimationReference _jump;
 
         //public Animator animator;
         //public AnimationClip baseAnimation;   // Example: Running animation
@@ -54,7 +53,7 @@ namespace Moths.Animations.Samples
 
             if (Input.GetKeyDown("f"))
             {
-                _animator.Play(_idle);
+                _animator.Play(_idle.Value);
             }
 
 
@@ -65,7 +64,7 @@ namespace Moths.Animations.Samples
 
             if (Input.GetKeyDown("s"))
             {
-                _animator.Stop(1);
+                _animator.Stop(_walkCircle.layer);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -77,12 +76,8 @@ namespace Moths.Animations.Samples
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                _animator.ClearQueue(0);
-                _animator.Queue(_punch);
-                _animator.Queue(_idle);
+                _animator.Play(_punch);
             }
-
-            Debug.Log(_animator.GetNormalizedTime(0));
         }
 
         void OnDestroy()

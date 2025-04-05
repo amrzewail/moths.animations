@@ -47,6 +47,17 @@ namespace Moths.Animations.Collections
 
         public int IndexOf(TKey key) => _dictionary[key];
 
+        public bool TryGetValue(TKey key, out TValue value, out int index)
+        {
+            if (_dictionary.TryGetValue(key, out index))
+            {
+                value = _list[index];
+                return true;
+            }
+            value = default;
+            index = -1;
+            return false;
+        }
     }
 
 }

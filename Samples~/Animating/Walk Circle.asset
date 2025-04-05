@@ -9,18 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5679d59cdb1f6644785013279bffc9b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 69266de8c8f949b469d847ed54e9b3be, type: 3}
   m_Name: Walk Circle
   m_EditorClassIdentifier: 
-  _layer: 1
-  _animatorController: {fileID: 0}
-  _animID:
-    value: 
-    field: {fileID: 0}
-    monoBehaviour: {fileID: 0}
-    valueType: 0
-  _stateName: 
-  _clip: {fileID: -203655887218126122, guid: 3c547e35b68b94749a3f3299b8d2f9f6, type: 3}
-  _speed: 1
-  _duration: 0
-  _mask: {fileID: 31900000, guid: 67437fa1f692c564bb7e94e84130dedb, type: 2}
+  value:
+    _animID:
+      value: 
+      field: {fileID: 0}
+      monoBehaviour: {fileID: 0}
+      valueType: 0
+    _mask: {fileID: 0}
+    _clip: {fileID: -203655887218126122, guid: 3c547e35b68b94749a3f3299b8d2f9f6, type: 3}
+    _speed: 1
+  _stacktraces: []
