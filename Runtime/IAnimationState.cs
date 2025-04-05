@@ -11,7 +11,13 @@ namespace Moths.Animations
         string animID { get; }
         string stateName { get; }
 
+        AnimationClip clip { get; }
+
+        float speed { get; }
+
         float duration { get; }
+
+        AvatarMask mask { get; }
 
         IAnimationState[] combine { get; }
     }

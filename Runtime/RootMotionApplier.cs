@@ -18,7 +18,7 @@ namespace Moths.Animations
         private Vector3 _deltaPosition = Vector3.zero;
         private Quaternion _deltaRotation = Quaternion.identity;
 
-        void OnAnimatorMove()
+        void OnAnimatorMoveF()
         {
             if (!_rootMotionTarget) return;
 
@@ -28,8 +28,8 @@ namespace Moths.Animations
             _deltaPosition += deltaPosition;
             _deltaRotation *= deltaRotation;
 
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
+            //transform.position -= deltaPosition;
+            //transform.rotation *= Quaternion.Inverse(deltaRotation);
 
             if ((_lockPosition & Constraint.X) != 0)
             {

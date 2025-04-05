@@ -8,7 +8,7 @@ namespace Moths.Animations
     [System.Serializable]
     public struct AnimationPlayInfo
     {
-        public const float BLEND_TIME = 0.2f;
+        public const float BLEND_TIME = 0.4f;
 
         public float speed;
         public bool mirror;
@@ -19,7 +19,12 @@ namespace Moths.Animations
         public bool forcePlay;
         public float exitRangeSecs;
 
-        public static AnimationPlayInfo Default = new AnimationPlayInfo(blendTime: BLEND_TIME);
+        public static readonly AnimationPlayInfo Default = new AnimationPlayInfo(blendTime: BLEND_TIME);
+
+        public AnimationPlayInfo(int _ = 0)
+        {
+            this = Default;
+        }
 
         public AnimationPlayInfo(
             float speed = 1,

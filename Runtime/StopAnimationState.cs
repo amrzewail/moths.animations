@@ -11,8 +11,10 @@ namespace Moths.Animations
 
         public string animID => "__StopID__";
         public string stateName => "Stop";
-
+        public AnimationClip clip => null;
         public float duration => 0;
+        public float speed => 0;
+        public AvatarMask mask => null;
 
         public IAnimationState[] combine => null;
 

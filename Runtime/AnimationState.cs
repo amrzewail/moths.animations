@@ -9,7 +9,7 @@ using UnityEditor.Animations;
 using Moths.Fields;
 namespace Moths.Animations
 {
-    [CreateAssetMenu(fileName = "Animation State", menuName = "Animations/Animation State")]
+    [CreateAssetMenu(fileName = "Animation State", menuName = "Moths/Animations/Animation State")]
     public class AnimationState : ScriptableObject, IAnimationState
     {
         [SerializeField] int _layer;
@@ -20,7 +20,10 @@ namespace Moths.Animations
 
         [SerializeField] StringReference _animID;
         [SerializeField] string _stateName;
+        [SerializeField] AnimationClip _clip;
+        [SerializeField] float _speed = 1;
         [SerializeField] float _duration;
+        [SerializeField] AvatarMask _mask;
 
 #if UNITY_EDITOR
         public AnimatorController animatorController => _animatorController;
@@ -31,7 +34,11 @@ namespace Moths.Animations
         public string animID => _animID;
         public string stateName => _stateName;
 
+        public AnimationClip clip => _clip;
+        public float speed => _speed;
+
         public float duration => Mathf.Abs(_duration);
+        public AvatarMask mask => _mask;
 
         public IAnimationState[] combine => null;
 

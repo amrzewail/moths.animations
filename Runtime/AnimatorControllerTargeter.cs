@@ -12,7 +12,7 @@ using UnityEditor.Animations;
 
 namespace Moths.Animations.Internal
 {
-    [CreateAssetMenu(menuName = "Animations/Animator Controller Targeter")]
+    [CreateAssetMenu(menuName = "Moths/Animations/Animator Controller Targeter")]
     public class AnimatorControllerTargeter : ScriptableObject
     {
 #if UNITY_EDITOR

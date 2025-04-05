@@ -35,64 +35,64 @@ namespace Moths.Animations.Editor
             _durationProperty = serializedObject.FindProperty("_duration");
         }
 
-        public override void OnInspectorGUI()
-        {
-            serializedObject.Update();
+        //public override void OnInspectorGUI()
+        //{
+        //    serializedObject.Update();
 
 
-            AnimationState instance = (AnimationState)target;
+        //    AnimationState instance = (AnimationState)target;
 
-            AnimatorController animator = instance.animatorController;
+        //    AnimatorController animator = instance.animatorController;
 
-            EditorGUILayout.PropertyField(_animatorProperty);
+        //    EditorGUILayout.PropertyField(_animatorProperty);
 
-            if (animator)
-            {
+        //    if (animator)
+        //    {
 
-                var layer = Mathf.Clamp(_layerProperty.intValue, 0, animator.layers.Length - 1);
-                var stateMachine = animator.layers[layer].stateMachine;
-                _layerProperty.intValue = Mathf.Clamp(_layerProperty.intValue, 0, animator.layers.Length);
-                EditorGUILayout.PropertyField(_layerProperty);
+        //        var layer = Mathf.Clamp(_layerProperty.intValue, 0, animator.layers.Length - 1);
+        //        var stateMachine = animator.layers[layer].stateMachine;
+        //        _layerProperty.intValue = Mathf.Clamp(_layerProperty.intValue, 0, animator.layers.Length);
+        //        EditorGUILayout.PropertyField(_layerProperty);
 
-                EditorGUILayout.PropertyField(_animIDProperty);
-
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel("State name");
+        //        EditorGUILayout.PropertyField(_animIDProperty);
 
 
-                ChildAnimatorState selectedState;
-                string statePath = "";
-
-                if (!string.IsNullOrEmpty(_stateNameProperty.stringValue))
-                {
-                    if (FindState(stateMachine, _stateNameProperty.stringValue, new List<string>(), out selectedState, out statePath))
-                    {
-                        _durationProperty.floatValue = selectedState.state.motion != null ? selectedState.state.motion.averageDuration / selectedState.state.speed : 0;
-                    }
-                }
+        //        EditorGUILayout.BeginHorizontal();
+        //        EditorGUILayout.PrefixLabel("State name");
 
 
-                if (EditorGUILayout.DropdownButton(new GUIContent(statePath), FocusType.Passive, GUILayout.ExpandWidth(true)))
-                {
-                    GenericMenu menu = new GenericMenu();
-                    AddStateMachineToMenu(menu, stateMachine, new List<string>());
+        //        ChildAnimatorState selectedState;
+        //        string statePath = "";
 
-                    menu.ShowAsContext();
-                }
+        //        if (!string.IsNullOrEmpty(_stateNameProperty.stringValue))
+        //        {
+        //            if (FindState(stateMachine, _stateNameProperty.stringValue, new List<string>(), out selectedState, out statePath))
+        //            {
+        //                _durationProperty.floatValue = selectedState.state.motion != null ? selectedState.state.motion.averageDuration / selectedState.state.speed : 0;
+        //            }
+        //        }
 
 
-                EditorGUILayout.EndHorizontal();
+        //        if (EditorGUILayout.DropdownButton(new GUIContent(statePath), FocusType.Passive, GUILayout.ExpandWidth(true)))
+        //        {
+        //            GenericMenu menu = new GenericMenu();
+        //            AddStateMachineToMenu(menu, stateMachine, new List<string>());
 
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel("Duration");
-                EditorGUILayout.LabelField(_durationProperty.floatValue.ToString());
-                EditorGUILayout.EndHorizontal();
+        //            menu.ShowAsContext();
+        //        }
 
-            }
 
-            serializedObject.ApplyModifiedProperties();
-        }
+        //        EditorGUILayout.EndHorizontal();
+
+        //        EditorGUILayout.BeginHorizontal();
+        //        EditorGUILayout.PrefixLabel("Duration");
+        //        EditorGUILayout.LabelField(_durationProperty.floatValue.ToString());
+        //        EditorGUILayout.EndHorizontal();
+
+        //    }
+
+        //    serializedObject.ApplyModifiedProperties();
+        //}
 
         private void AddStateMachineToMenu(GenericMenu menu, AnimatorStateMachine stateMachine, List<string> stack)
         {
