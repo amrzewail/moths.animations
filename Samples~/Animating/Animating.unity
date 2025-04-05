@@ -499,6 +499,8 @@ MonoBehaviour:
   _idle: {fileID: 11400000, guid: a2088d02cfdb13a45a18828e6f94c0fb, type: 2}
   _walk: {fileID: 11400000, guid: 7b9e3fd02b01f854e8916545a8751f42, type: 2}
   _walkCircle: {fileID: 11400000, guid: e8b9cc346da205b4d91a56df6597088b, type: 2}
+  _punch: {fileID: 11400000, guid: 91dceaace453c16448dff532d6789e0b, type: 2}
+  _jump: {fileID: 11400000, guid: 113173495fdc3a345a3de3ed470e3896, type: 2}
 --- !u!4 &1843408559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 94f293faeebc5da42bbe377bf8d05a86, type: 3}

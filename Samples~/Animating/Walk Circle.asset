@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5679d59cdb1f6644785013279bffc9b3, type: 3}
   m_Name: Walk Circle
   m_EditorClassIdentifier: 
-  _layer: 0
+  _layer: 1
   _animatorController: {fileID: 0}
   _animID:
     value: 

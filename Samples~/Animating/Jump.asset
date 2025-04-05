@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5679d59cdb1f6644785013279bffc9b3, type: 3}
   m_Name: Jump
   m_EditorClassIdentifier: 
-  _layer: 0
+  _layer: 1
   _animatorController: {fileID: 0}
   _animID:
     value: 
@@ -20,7 +20,7 @@ MonoBehaviour:
     monoBehaviour: {fileID: 0}
     valueType: 0
   _stateName: 
-  _clip: {fileID: -203655887218126122, guid: 7470ff465b4cf9b4daa2e1e68dce607b, type: 3}
+  _clip: {fileID: -203655887218126122, guid: e05de390388022048a7663e4df9e52d7, type: 3}
   _speed: 1
   _duration: 0
-  _mask: {fileID: 0}
+  _mask: {fileID: 31900000, guid: 67437fa1f692c564bb7e94e84130dedb, type: 2}
