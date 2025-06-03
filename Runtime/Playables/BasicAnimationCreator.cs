@@ -4,19 +4,28 @@ using UnityEngine.Playables;
 
 namespace Moths.Animations.Playables
 {
-    public struct BasicAnimationCreator : IPlayableCreator
+    public struct BasicAnimationCreator<TAnimation> : IPlayableCreator where TAnimation : IAnimation
     {
-        private UAnimation _animation;
+        private TAnimation _animation;
 
-        public BasicAnimationCreator(IAnimation animation)
+        public BasicAnimationCreator(TAnimation animation)
         {
-            _animation = UAnimation.ConstructFrom(animation);
+            _animation = animation;
         }
 
         public Playable Create(PlayableGraph graph)
         {
-            return AnimationClipPlayable.Create(graph, _animation.clip);
-
+            var playable = AnimationClipPlayable.Create(graph, _animation.clip);
+            playable.SetApplyFootIK(_animation.applyIK);
+            playable.SetApplyPlayableIK(_animation.applyIK);
+            return playable;
         }
+
+        public float GetDuration()
+        {
+            return _animation.clip.length * _animation.speed;
+        }
+
+        public bool IsLoop() => _animation.clip.isLooping || _animation.clip.wrapMode == WrapMode.Loop || _animation.clip.wrapMode == WrapMode.PingPong;
     }
 }

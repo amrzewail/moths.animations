@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Moths.Animations.Playables;
 using Moths.Animations.Collections;
+using Moths.Collections;
 
 #if UNITY_EDITOR
 using UnityEditor.Animations;
@@ -12,7 +13,7 @@ using Moths.Fields;
 namespace Moths.Animations
 {
     [CreateAssetMenu(fileName = "Animation State", menuName = "Moths/Animations/Animation State")]
-    public class AnimationState : ScriptableObject, IAnimation
+    public class AnimationState : ScriptableObject
     {
 #region LEGACY
         [SerializeField] int _layer;
@@ -43,10 +44,25 @@ namespace Moths.Animations
 
         public AnimLayer layer => throw new System.NotImplementedException();
 
+        public float length => throw new System.NotImplementedException();
+
+        public Unique uniqueId => throw new System.NotImplementedException();
+
+        public float duration => throw new System.NotImplementedException();
+
+        public bool loop => throw new System.NotImplementedException();
+
+        public bool applyIK => throw new System.NotImplementedException();
+
 #if UNITY_EDITOR
         public static float CalculateDuration(AnimatorState state)
         {
             return state.motion != null ? state.motion.averageDuration / state.speed : 0;
+        }
+
+        public bool IsValid()
+        {
+            throw new System.NotImplementedException();
         }
 #endif
     }

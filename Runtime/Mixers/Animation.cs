@@ -8,7 +8,7 @@ namespace Moths.Animations
     {
         public override UAnimation GetValue()
         {
-            value.playable = new BasicAnimationCreator(value);
+            value.playable = new BasicAnimationCreator<UAnimation>(value);
             return value;
         }
     }

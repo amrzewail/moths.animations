@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: Idle
   m_EditorClassIdentifier: 
   value:
+    _uniqueId:
+      _identifier: 638797417550297346
     _animID:
       value: 
       field: {fileID: 0}
       monoBehaviour: {fileID: 0}
       valueType: 0
-    _mask: {fileID: 0}
     _clip: {fileID: -203655887218126122, guid: 85b567e8368295641b2d5283c6cdfe2c, type: 3}
+    _mask: {fileID: 0}
     _speed: 1
+    _loop: 1
+    _applyIK: 1
   _stacktraces: []

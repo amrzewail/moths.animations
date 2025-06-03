@@ -6,11 +6,12 @@ using Moths.Fields;
 using Moths.Animations.Attributes;
 using Moths.Animations.Playables;
 using Moths.Animations.Collections;
+using Moths.Collections;
 
 namespace Moths.Animations
 {
     [CreateAssetMenu(fileName = "Combine Animation State", menuName = "Moths/Animations/Combine Animation State")]
-    public class CombineAnimationState : ScriptableObject, IAnimation
+    public class CombineAnimationState : ScriptableObject
     {
 
         [SerializeField] StringReference _animID;
@@ -36,7 +37,6 @@ namespace Moths.Animations
 
         public AnimationClip clip => null;
 
-        public float duration => ((IAnimation)_combine[0]).duration;
         public float speed => 1;
 
         public AvatarMask mask => null;
@@ -44,5 +44,18 @@ namespace Moths.Animations
         public IPlayableCreator playable => throw new System.NotImplementedException();
 
         public AnimLayer layer => throw new System.NotImplementedException();
+
+        public float length => throw new System.NotImplementedException();
+
+        public Unique uniqueId => throw new System.NotImplementedException();
+
+        public bool loop => throw new System.NotImplementedException();
+
+        public bool applyIK => throw new System.NotImplementedException();
+
+        public bool IsValid()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

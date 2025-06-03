@@ -47,6 +47,12 @@ namespace Moths.Animations.Collections
 
         public int IndexOf(TKey key) => _dictionary[key];
 
+        //public void Remove(TKey key)
+        //{
+        //    _list.RemoveAt(_dictionary[key]);
+        //    _dictionary.Remove(key);
+        //}
+
         public bool TryGetValue(TKey key, out TValue value, out int index)
         {
             if (_dictionary.TryGetValue(key, out index))

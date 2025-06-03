@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Jump
   m_EditorClassIdentifier: 
   value:
+    _uniqueId:
+      _identifier: 638797418953942034
     _animID:
       value: 
       field: {fileID: 0}
       monoBehaviour: {fileID: 0}
       valueType: 0
-    _mask: {fileID: 0}
     _clip: {fileID: -203655887218126122, guid: e05de390388022048a7663e4df9e52d7, type: 3}
+    _mask: {fileID: 0}
     _speed: 1
+    _loop: 0
   _stacktraces: []

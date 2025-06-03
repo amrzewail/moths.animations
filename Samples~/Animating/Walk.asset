@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69266de8c8f949b469d847ed54e9b3be, type: 3}
-  m_Name: Walk Circle
+  m_Name: Walk
   m_EditorClassIdentifier: 
   value:
     _uniqueId:
-      _identifier: 638797419004563947
+      _identifier: 638797541865754530
     _animID:
       value: 
       field: {fileID: 0}
       monoBehaviour: {fileID: 0}
       valueType: 0
-    _clip: {fileID: -203655887218126122, guid: 3c547e35b68b94749a3f3299b8d2f9f6, type: 3}
+    _clip: {fileID: -203655887218126122, guid: a35421bdbaa72cc4783a05497f17d418, type: 3}
     _mask: {fileID: 0}
     _speed: 1
     _loop: 1

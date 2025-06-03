@@ -9,7 +9,7 @@ namespace Moths.Animations
     [System.Serializable]
     public struct AnimationPlayInfo
     {
-        public const float BLEND_TIME = 0.4f;
+        public const float BLEND_TIME = 0.25f;
 
         public float speed;
         public bool mirror;
@@ -71,6 +71,7 @@ namespace Moths.Animations
         public bool IsAnimationFinished(AnimLayer layer);
 
         public float GetNormalizedTime(AnimLayer layer);
+        public void SetNormalizedTime(AnimLayer layer, float time);
 
         public IAnimation GetCurrentAnimation(AnimLayer layer);
 

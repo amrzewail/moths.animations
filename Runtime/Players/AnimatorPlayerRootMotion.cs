@@ -31,9 +31,6 @@ namespace Moths.Animations
             _deltaPosition += deltaPosition;
             _deltaRotation *= deltaRotation;
 
-            //transform.position -= deltaPosition;
-            //transform.rotation *= Quaternion.Inverse(deltaRotation);
-
             if ((_lockPosition & Constraint.X) != 0)
             {
                 _deltaPosition -= transform.right * Vector3.Dot(transform.right, _deltaPosition);

@@ -13,49 +13,57 @@ MonoBehaviour:
   m_Name: Animation Mix
   m_EditorClassIdentifier: 
   value:
+    _uniqueId:
+      _identifier: 638797452918453848
     _animID:
       value: 
       field: {fileID: 0}
       monoBehaviour: {fileID: 0}
       valueType: 0
+    _clip: {fileID: 0}
     _mask: {fileID: 0}
-    _clip: {fileID: -203655887218126122, guid: 85b567e8368295641b2d5283c6cdfe2c, type: 3}
     _speed: 1
+    _loop: 0
+    _applyIK: 0
   _stacktraces: []
+  _uniqueId:
+    _identifier: 638797452918453848
+  _animID:
+    value: 
+    field: {fileID: 0}
+    monoBehaviour: {fileID: 0}
+    valueType: 0
+  _mask: {fileID: 0}
   _animations:
   - value:
+      _uniqueId:
+        _identifier: 638797418541972671
       _animID:
         value: 
         field: {fileID: 0}
         monoBehaviour: {fileID: 0}
         valueType: 0
-      _mask: {fileID: 0}
       _clip: {fileID: -203655887218126122, guid: 3c547e35b68b94749a3f3299b8d2f9f6, type: 3}
+      _mask: {fileID: 0}
       _speed: 1
-    field: {fileID: 0}
+      _loop: 0
+      _applyIK: 0
+    field: {fileID: 11400000, guid: b36155c09b1dd9e4990bfccbdbc6b1f0, type: 2}
     monoBehaviour: {fileID: 0}
-    valueType: 0
+    valueType: 1
   - value:
+      _uniqueId:
+        _identifier: 638797416138293488
       _animID:
         value: 
         field: {fileID: 0}
         monoBehaviour: {fileID: 0}
         valueType: 0
-      _mask: {fileID: 31900000, guid: 5fd6eb978c5edb94cb68bc4e9c5167e3, type: 2}
       _clip: {fileID: -203655887218126122, guid: bb177e3f371578841aa745dc6baee41d, type: 3}
+      _mask: {fileID: 31900000, guid: 5fd6eb978c5edb94cb68bc4e9c5167e3, type: 2}
       _speed: 1
-    field: {fileID: 0}
-    monoBehaviour: {fileID: 0}
-    valueType: 0
-  - value:
-      _animID:
-        value: 
-        field: {fileID: 0}
-        monoBehaviour: {fileID: 0}
-        valueType: 0
-      _mask: {fileID: 31900000, guid: 0d7c2f1c3a0e76d48933d54e0498d01d, type: 2}
-      _clip: {fileID: -203655887218126122, guid: ced1aca886366374b8d3694c80f24064, type: 3}
-      _speed: 1
+      _loop: 1
+      _applyIK: 0
     field: {fileID: 0}
     monoBehaviour: {fileID: 0}
     valueType: 0

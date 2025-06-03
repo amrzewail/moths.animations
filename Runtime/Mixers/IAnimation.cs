@@ -1,23 +1,24 @@
 using Moths.Animations.Collections;
 using Moths.Animations.Playables;
+using Moths.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace Moths.Animations
 {
     public interface IAnimation
     {
-        IPlayableCreator playable { get; }
-
+        Unique uniqueId { get; }
         AnimLayer layer { get; }
-        float duration => speed > 0 ? clip.length / speed : 0;
-
-        string animID { get; }
         AnimationClip clip { get; }
+        string animID { get; }
         float speed { get; }
-
+        bool loop { get; }
+        bool applyIK { get; }
         bool IsNull() => !IsValid();
-        bool IsValid() => clip;
+        bool IsValid();
+        IPlayableCreator playable { get; }
     }
 }
