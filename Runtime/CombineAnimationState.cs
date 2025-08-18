@@ -7,7 +7,7 @@ using Moths.Animations.Attributes;
 
 namespace Moths.Animations
 {
-    [CreateAssetMenu(fileName = "Combine Animation State", menuName = "Animations/Combine Animation State")]
+    [CreateAssetMenu(fileName = "Combine Animation State", menuName = "Moths/Animations/Combine Animation State")]
     public class CombineAnimationState : ScriptableObject, IAnimationState
     {
 

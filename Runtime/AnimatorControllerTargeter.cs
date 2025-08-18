@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+
 
 #if UNITY_EDITOR
 
@@ -12,13 +14,13 @@ using UnityEditor.Animations;
 
 namespace Moths.Animations.Internal
 {
-    [CreateAssetMenu(menuName = "Animations/Animator Controller Targeter")]
+    [CreateAssetMenu(menuName = "Moths/Animations/Animator Controller Targeter")]
     public class AnimatorControllerTargeter : ScriptableObject
     {
 #if UNITY_EDITOR
 
         [System.Serializable]
-        private struct StateReference
+        public struct StateReference
         {
             public AnimatorState target;
             public AnimationState state;
@@ -29,12 +31,21 @@ namespace Moths.Animations.Internal
         [SerializeField] List<StateReference> _references = new List<StateReference>();
 
 
-        private void OnValidate()
+        private async void OnValidate()
         {
             _refresh = false;
 
+            await Task.Delay(500);
+
             if (!_animatorController) return;
             if (_animatorController.layers == null) return;
+
+            for (int i = _references.Count - 1; i >= 0; i--)
+            {
+                if (!_references[i].state) _references.RemoveAt(i);
+            }
+
+            RemoveDuplicates();
 
             HashSet<AnimatorState> existingStates = new HashSet<AnimatorState>(); 
             for (int i = 0; i < _animatorController.layers.Length; i++)
@@ -66,6 +77,28 @@ namespace Moths.Animations.Internal
             }
 
             AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
+        }
+
+        private void RemoveDuplicates()
+        {
+            for (int i = 0; i < _references.Count; i++)
+            {
+                var target = _references[i].target;
+                var state = _references[i].state;
+                if (!target || !state) continue;
+                for (int j = i + 1; j < _references.Count; j++)
+                {
+                    if (_references[j].target != target) continue;
+                    if (!_references[j].state) continue;
+                    if (state != _references[j].state)
+                    {
+                        AssetDatabase.RemoveObjectFromAsset(_references[j].state);
+                    }
+                    _references.RemoveAt(j);
+                    j--;
+                    EditorUtility.SetDirty(this);
+                }
+            }
         }
 
         private AnimationState FindState(AnimatorState state)

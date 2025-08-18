@@ -9,7 +9,7 @@ using UnityEditor.Animations;
 using Moths.Fields;
 namespace Moths.Animations
 {
-    [CreateAssetMenu(fileName = "Animation State", menuName = "Animations/Animation State")]
+    [CreateAssetMenu(fileName = "Animation State", menuName = "Moths/Animations/Animation State")]
     public class AnimationState : ScriptableObject, IAnimationState
     {
         [SerializeField] int _layer;
