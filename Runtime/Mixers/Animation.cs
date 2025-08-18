@@ -6,10 +6,14 @@ namespace Moths.Animations
     [CreateAssetMenu(fileName = "Animation", menuName = "Moths/Animations/Animation")]
     public class Animation : AnimationField
     {
-        public override UAnimation GetValue()
+        public override UAnimation Value
         {
-            value.playable = new BasicAnimationCreator<UAnimation>(value);
-            return value;
+            get
+            {
+                value.playable = new BasicAnimationCreator<UAnimation>(value);
+                return value;
+            }
+            set => base.Value = value;
         }
     }
 }
