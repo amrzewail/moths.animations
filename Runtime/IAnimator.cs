@@ -48,6 +48,8 @@ namespace Moths.Animations
 
         public IAnimationState DefaultAnimation { get; }
 
+        public AnimatorPlayer.Constraint PositionConstraints { get; set; }
+
         public void Play(IAnimationState state);
 
         public void Play(IAnimationState state, AnimationPlayInfo info);

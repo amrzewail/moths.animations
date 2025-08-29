@@ -14,7 +14,6 @@ namespace Moths.Animations
             public AnimationPlayInfo info;
         }
 
-
         private Animator _animator;
         private AnimatorLayer[] _layers;
         private bool[] _usedLayers;
@@ -34,6 +33,7 @@ namespace Moths.Animations
         public AnimatorLayer[] layers => _layers;
 
         public IAnimationState DefaultAnimation => _defaultAnimation;
+        public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
 
         private void Awake()
         {
