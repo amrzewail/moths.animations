@@ -10,7 +10,10 @@ namespace Moths.Animations.Behaviours
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.applyRootMotion = applyRootMotion;
+            IAnimator a = animator.GetComponent<IAnimator>();
+            if (a == null) return;
+
+            a.PositionConstraints = applyRootMotion ? AnimatorPlayer.Constraint.None : AnimatorPlayer.Constraint.X | AnimatorPlayer.Constraint.Y | AnimatorPlayer.Constraint.Z;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
