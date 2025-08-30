@@ -10,13 +10,19 @@ namespace Moths.Animations.Behaviours
         private IAnimator _controller;
         private bool _invokedFinish = false;
 
-        // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            _invokedFinish = false;
+
             _controller = animator.GetComponent<IAnimator>();
+
+            var animation = _controller.GetCurrentAnimation(layerIndex);
+            if (animation == null) return;
+            if (!stateInfo.IsName(animation.stateName)) return;
+
+            _controller.SetNormalizedTime(layerIndex, 0);
         }
 
-        // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             var animation = _controller.GetCurrentAnimation(layerIndex);
@@ -38,22 +44,9 @@ namespace Moths.Animations.Behaviours
             }
         }
 
-        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _invokedFinish = false;
         }
-
-        // OnStateMove is called right after Animator.OnAnimatorMove()
-        //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that processes and affects root motion
-        //}
-
-        // OnStateIK is called right after Animator.OnAnimatorIK()
-        //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that sets up animation IK (inverse kinematics)
-        //}
     }
 }

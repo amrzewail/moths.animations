@@ -98,10 +98,6 @@ namespace Moths.Animations
                         continue;
                     }
                 }
-
-                //if (_layers[pair.Key].isAnimationFinished) queue.RemoveAt(0);
-
-                //if(queue.Count > 0) PlayNoClearQueue(queue[0].state, queue[0].info);
             }
         }
 
@@ -209,8 +205,6 @@ namespace Moths.Animations
             AppendUsedLayers(state, _usedLayers);
 
             PlayInternal(state, info, true);
-
-
         }
 
         public void Stop(int layer)
