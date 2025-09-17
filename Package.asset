@@ -13,19 +13,29 @@ MonoBehaviour:
   m_Name: Package
   m_EditorClassIdentifier: 
   _package:
-    name: 
-    displayName: 
+    name: com.moths.animations
+    displayName: Moths Animations
     version:
-      v0: 0
+      v0: 1
       v1: 0
       v2: 0
-    unity: 0
-    description: 
+    unity: 1
+    description: A package for handling animations within the Moths framework.
     author:
-      name: 
-      email: 
-      url: 
-    dependencies: []
-    changelog: []
+      name: Amr Zewail
+      email: amrzewail@hotmail.com
+      url: https://github.com/amrzewail
+    dependencies:
+    - name: com.moths.core
+      version:
+        v0: 1
+        v1: 0
+        v2: 0
+    changelog:
+    - version:
+        v0: 1
+        v1: 0
+        v2: 0
+      description: '- Initial release'
     samples: []
     license: 0
