@@ -37,8 +37,5 @@ MonoBehaviour:
         v1: 0
         v2: 0
       description: '- Initial release'
-    samples:
-    - displayName: Animating Sample
-      description: 
-      path: Samples~/Animating
+    samples: []
     license: 0
