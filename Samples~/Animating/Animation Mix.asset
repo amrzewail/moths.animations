@@ -21,7 +21,7 @@ MonoBehaviour:
       monoBehaviour: {fileID: 0}
       valueType: 0
     _clip: {fileID: 0}
-    _mask: {fileID: 0}
+    _mask: {fileID: 31900000, guid: f4741f30a4138074f9767542c704cf32, type: 2}
     _speed: 1
     _loop: 0
     _applyIK: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     field: {fileID: 0}
     monoBehaviour: {fileID: 0}
     valueType: 0
-  _mask: {fileID: 0}
+  _mask: {fileID: 31900000, guid: f4741f30a4138074f9767542c704cf32, type: 2}
   _animations:
   - value:
       _uniqueId:
@@ -53,13 +53,13 @@ MonoBehaviour:
     valueType: 1
   - value:
       _uniqueId:
-        _identifier: 638797416138293488
+        _identifier: 638937403841828318
       _animID:
         value: 
         field: {fileID: 0}
         monoBehaviour: {fileID: 0}
         valueType: 0
-      _clip: {fileID: -203655887218126122, guid: bb177e3f371578841aa745dc6baee41d, type: 3}
+      _clip: {fileID: -203655887218126122, guid: ced1aca886366374b8d3694c80f24064, type: 3}
       _mask: {fileID: 31900000, guid: 5fd6eb978c5edb94cb68bc4e9c5167e3, type: 2}
       _speed: 1
       _loop: 1

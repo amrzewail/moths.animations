@@ -106,8 +106,10 @@ namespace Moths.Animations
 
             var animationPlayable = GetOrCreatePlayable(animation);
 
-            NormalizedTime = 0;
+            _mixer.SetSpeed(1);
 
+            NormalizedTime = 0;
+            
             animationPlayable.SetSpeed(animation.speed * playInfo.speed);
         }
 

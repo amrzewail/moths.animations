@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    _animator.Stop(_walk.Value.layer);
                     _state = State.Idle;
                 }
                 if (isJump) _state = State.Jump;

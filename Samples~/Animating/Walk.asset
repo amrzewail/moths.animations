@@ -21,7 +21,7 @@ MonoBehaviour:
       monoBehaviour: {fileID: 0}
       valueType: 0
     _clip: {fileID: -203655887218126122, guid: a35421bdbaa72cc4783a05497f17d418, type: 3}
-    _mask: {fileID: 0}
+    _mask: {fileID: 31900000, guid: 67437fa1f692c564bb7e94e84130dedb, type: 2}
     _speed: 1
     _loop: 1
     _applyIK: 1
