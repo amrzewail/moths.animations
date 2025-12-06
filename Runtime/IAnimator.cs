@@ -55,8 +55,8 @@ namespace Moths.Animations
 
         public RootMotion Damp(RootMotion lastRootMotion)
         {
-            DeltaPosition = Vector3.Lerp(DeltaPosition, lastRootMotion.DeltaPosition, 1 - Mathf.Exp(-10 * Time.deltaTime));
-            DeltaRotation = Quaternion.Slerp(DeltaRotation, lastRootMotion.DeltaRotation, 1 - Mathf.Exp(-10 * Time.deltaTime));
+            DeltaPosition = Vector3.Lerp(DeltaPosition, lastRootMotion.DeltaPosition, 1 - Mathf.Exp(-20 * Time.deltaTime));
+            DeltaRotation = Quaternion.Slerp(DeltaRotation, lastRootMotion.DeltaRotation, 1 - Mathf.Exp(-20 * Time.deltaTime));
             return this;
         }
     }
