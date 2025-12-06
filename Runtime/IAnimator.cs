@@ -42,11 +42,31 @@ namespace Moths.Animations
         }
     }
 
+    public struct RootMotion
+    {
+        public Vector3 DeltaPosition { get; private set; }
+        public Quaternion DeltaRotation { get; private set; }
+
+        public RootMotion(Vector3 deltaPosition, Quaternion deltaRotation)
+        {
+            DeltaPosition = deltaPosition;
+            DeltaRotation = deltaRotation;
+        }
+
+        public RootMotion Damp(RootMotion lastRootMotion)
+        {
+            DeltaPosition = Vector3.Lerp(DeltaPosition, lastRootMotion.DeltaPosition, 1 - Mathf.Exp(-10 * Time.deltaTime));
+            DeltaRotation = Quaternion.Slerp(DeltaRotation, lastRootMotion.DeltaRotation, 1 - Mathf.Exp(-10 * Time.deltaTime));
+            return this;
+        }
+    }
+
     public interface IAnimator
     {
         public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
 
         public IAnimationState DefaultAnimation { get; }
+        public RootMotion RootMotion { get; }
 
         public AnimatorPlayer.Constraint PositionConstraints { get; set; }
 

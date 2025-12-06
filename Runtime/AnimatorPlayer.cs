@@ -32,6 +32,7 @@ namespace Moths.Animations
         public string[] noBlendTimeAnimations;
         public AnimatorLayer[] layers => _layers;
 
+        public RootMotion RootMotion { get; private set; }
         public IAnimationState DefaultAnimation => _defaultAnimation;
         public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
 
@@ -41,8 +42,8 @@ namespace Moths.Animations
             _layers = new AnimatorLayer[_animator.layerCount];
             for (int i = 0; i < _layers.Length; i++) _layers[i] = new AnimatorLayer();
 
-            if (_usedLayers == null) _usedLayers = new bool[layers.Length];
-            if (_currentPlayingQueue == null) _currentPlayingQueue = new bool[layers.Length];
+            _usedLayers = new bool[layers.Length];
+            _currentPlayingQueue = new bool[layers.Length];
 
         }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Moths.Animations
@@ -25,8 +23,8 @@ namespace Moths.Animations
             Quaternion deltaRotation = _animator.deltaRotation;
             Vector3 deltaPosition = _animator.deltaPosition;
 
-            _deltaPosition += deltaPosition;
-            _deltaRotation *= deltaRotation;
+            _deltaPosition = deltaPosition;
+            _deltaRotation = deltaRotation;
 
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
@@ -46,11 +44,7 @@ namespace Moths.Animations
                 _deltaPosition -= transform.forward * Vector3.Dot(transform.forward, _deltaPosition);
             }
 
-            _rootMotionTarget.position += _deltaPosition;
-            _rootMotionTarget.rotation *= _deltaRotation;
-
-            _deltaPosition = Vector3.zero;
-            _deltaRotation = Quaternion.identity;
+            RootMotion = new RootMotion(_deltaPosition, _deltaRotation);
         }
     }
 }

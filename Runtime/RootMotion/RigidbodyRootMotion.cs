@@ -1,0 +1,43 @@
+using UnityEngine;
+
+namespace Moths.Animations
+{
+    [RequireComponent(typeof(IAnimator))]
+    public class RigidbodyRootMotion : MonoBehaviour
+    {
+        private IAnimator _animator;
+        private RootMotion _rootMotion;
+
+        private Vector3 _deltaPosition;
+        private Quaternion _deltaRotation;
+
+        [SerializeField] Rigidbody _rigidbody;
+
+        private void Awake()
+        {
+            _animator = GetComponent<IAnimator>();
+
+            _rootMotion = new RootMotion(Vector3.zero, Quaternion.identity);
+
+            _deltaPosition = Vector3.zero;
+            _deltaRotation = Quaternion.identity;
+        }
+
+        private void LateUpdate()
+        {
+            _rootMotion = _animator.RootMotion.Damp(_rootMotion);
+
+            _deltaPosition += _rootMotion.DeltaPosition;
+            _deltaRotation = _deltaRotation * _rootMotion.DeltaRotation;
+        }
+
+        private void FixedUpdate()
+        {
+            _rigidbody.MovePosition(_rigidbody.position + _deltaPosition);
+            _rigidbody.MoveRotation(_rigidbody.rotation * _deltaRotation);
+
+            _deltaPosition = Vector3.zero;
+            _deltaRotation = Quaternion.identity;
+        }
+    }
+}
