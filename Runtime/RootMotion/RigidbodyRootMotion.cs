@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Moths.Animations
 {
     [RequireComponent(typeof(IAnimator))]
-    public class RigidbodyRootMotion : MonoBehaviour
+    public class RigidbodyRootMotion : MonoBehaviour, IRootMotionApplier
     {
         private IAnimator _animator;
         private RootMotion _rootMotion;
