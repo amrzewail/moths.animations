@@ -13,6 +13,8 @@ namespace Moths.Animations
 
         [SerializeField] Rigidbody _rigidbody;
 
+        public Vector3 PositionMultiplier { get; set; } = Vector3.one;
+
         private void Awake()
         {
             _animator = GetComponent<IAnimator>();
@@ -27,7 +29,7 @@ namespace Moths.Animations
         {
             _rootMotion = _animator.RootMotion.Damp(_rootMotion);
 
-            _deltaPosition += _rootMotion.DeltaPosition;
+            _deltaPosition += Vector3.Scale(_rootMotion.DeltaPosition, PositionMultiplier);
             _deltaRotation = _deltaRotation * _rootMotion.DeltaRotation;
         }
 
