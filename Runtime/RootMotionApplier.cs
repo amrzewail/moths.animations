@@ -10,7 +10,6 @@ namespace Moths.Animations
             None = 0, X = 1 << 0, Y = 1 << 1, Z = 1 << 2
         };
 
-        [SerializeField] Transform _rootMotionTarget;
         [SerializeField] Constraint _lockPosition;
 
         private Vector3 _deltaPosition = Vector3.zero;
@@ -18,8 +17,6 @@ namespace Moths.Animations
 
         void OnAnimatorMove()
         {
-            if (!_rootMotionTarget) return;
-
             Quaternion deltaRotation = _animator.deltaRotation;
             Vector3 deltaPosition = _animator.deltaPosition;
 
