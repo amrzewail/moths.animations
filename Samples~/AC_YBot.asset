@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5149087548025848783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5679d59cdb1f6644785013279bffc9b3, type: 3}
+  m_Name: Big Jump (0)
+  m_EditorClassIdentifier: Moths.Animations::Moths.Animations.AnimationState
+  _layer: 0
+  _animatorController: {fileID: 9100000, guid: 3cbdb57119b7d3542b7f32a2315e419c, type: 2}
+  _animID:
+    value: 
+    field: {fileID: 0}
+    monoBehaviour: {fileID: 0}
+    valueType: 0
+  _stateName: Big Jump
+  _duration: 2.3666668
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b7b762bb7118041b506756fa71eeaa, type: 3}
+  m_Name: AC_YBot
+  m_EditorClassIdentifier: Moths.Animations::Moths.Animations.Internal.AnimatorControllerTargeter
+  _animatorController: {fileID: 9100000, guid: 3cbdb57119b7d3542b7f32a2315e419c, type: 2}
+  _refresh: 0
+  _references:
+  - target: {fileID: -4289703511907707032, guid: 3cbdb57119b7d3542b7f32a2315e419c, type: 2}
+    state: {fileID: -5149087548025848783}

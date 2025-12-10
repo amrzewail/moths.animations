@@ -14,6 +14,22 @@ namespace Moths.Animations
             public AnimationPlayInfo info;
         }
 
+        [System.Flags]
+        public enum Constraint
+        {
+            None = 0, X = 1 << 0, Y = 1 << 1, Z = 1 << 2
+        };
+
+        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
+
+        public AnimatorLayer[] layers => _layers;
+        public RootMotion RootMotion { get; private set; }
+        public IAnimationState DefaultAnimation => _defaultAnimation;
+        public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
+
+        [SerializeField] AnimationState _defaultAnimation;
+        [SerializeField] Constraint _lockPosition;
+
         private Animator _animator;
         private AnimatorLayer[] _layers;
         private bool[] _usedLayers;
@@ -21,20 +37,12 @@ namespace Moths.Animations
         private Dictionary<int, List<AnimationQueue>> _queue = new Dictionary<int, List<AnimationQueue>>();
         private bool[] _currentPlayingQueue = null;
 
+        private Vector3 _deltaPosition = Vector3.zero;
+        private Quaternion _deltaRotation = Quaternion.identity;
+
         private float _animatorSpeed = 1;
         private float _isPausedSpeed = 1;
 
-
-        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
-
-        [SerializeField] AnimationState _defaultAnimation;
-
-        public string[] noBlendTimeAnimations;
-        public AnimatorLayer[] layers => _layers;
-
-        public RootMotion RootMotion { get; private set; }
-        public IAnimationState DefaultAnimation => _defaultAnimation;
-        public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
 
         private void Awake()
         {
@@ -101,6 +109,31 @@ namespace Moths.Animations
                 }
             }
         }
+        void OnAnimatorMove()
+        {
+            Quaternion deltaRotation = _animator.deltaRotation;
+            Vector3 deltaPosition = _animator.deltaPosition;
+
+            _deltaPosition = deltaPosition;
+            _deltaRotation = deltaRotation;
+
+            if ((_lockPosition & Constraint.X) != 0)
+            {
+                _deltaPosition -= transform.right * Vector3.Dot(transform.right, _deltaPosition);
+            }
+
+            if ((_lockPosition & Constraint.Y) != 0)
+            {
+                _deltaPosition -= transform.up * Vector3.Dot(transform.up, _deltaPosition);
+            }
+
+            if ((_lockPosition & Constraint.Z) != 0)
+            {
+                _deltaPosition -= transform.forward * Vector3.Dot(transform.forward, _deltaPosition);
+            }
+
+            RootMotion = new RootMotion(_deltaPosition, _deltaRotation);
+        }
 
         private void PlayInternal(IAnimationState state, AnimationPlayInfo info, bool clearQueue)
         {
@@ -125,7 +158,7 @@ namespace Moths.Animations
                 if (state.layer >= _layers.Length) return;
 
                 var animLayer = _layers[state.layer];
-                if (animLayer.Play(_animator, state.layer, noBlendTimeAnimations, state, info))
+                if (animLayer.Play(_animator, state.layer, state, info))
                 {
                     AnimationPlayed?.Invoke(state, info);
                 }
@@ -355,7 +388,7 @@ namespace Moths.Animations
                 currentFrame = Mathf.FloorToInt(normalizedTime * (animator.GetCurrentAnimatorStateInfo(0).length * 30));
             }
 
-            public bool Play(Animator animator, int layer, string[] noBlendTimeAnimations, IAnimationState state, AnimationPlayInfo info)
+            public bool Play(Animator animator, int layer, IAnimationState state, AnimationPlayInfo info)
             {
                 if (!IsPlaying(state) || isAnimationFinished || info.forcePlay)
                 {
@@ -364,7 +397,7 @@ namespace Moths.Animations
 
                     _playInfo = info;
 
-                    animator.CrossFadeInFixedTime(state.stateName, noBlendTimeAnimations.Contains(state.stateName) ? 0 : info.blendTime, layer, state.duration * info.normalizedTime);
+                    animator.CrossFadeInFixedTime(state.stateName, info.blendTime, layer, state.duration * info.normalizedTime);
                     animator.SetFloat("Speed", info.speed);
                     _currentSpeed = info.speed;
                     animator.SetBool("Mirror", info.mirror);

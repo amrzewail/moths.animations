@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Moths.Animations
 {
     [RequireComponent(typeof(IAnimator))]
-    public class RigidbodyRootMotion : MonoBehaviour, IRootMotionApplier
+    public class TransformRootMotion : MonoBehaviour, IRootMotionApplier
     {
         private IAnimator _animator;
         private RootMotion _rootMotion;
@@ -11,8 +11,7 @@ namespace Moths.Animations
         private Vector3 _deltaPosition;
         private Quaternion _deltaRotation;
 
-        [SerializeField] Rigidbody _rigidbody;
-        [SerializeField] bool _deltaTransformWhenKinematic;
+        [SerializeField] Transform _transform;
 
         public Vector3 PositionMultiplier { get; set; } = Vector3.one;
 
@@ -32,20 +31,9 @@ namespace Moths.Animations
 
             _deltaPosition += Vector3.Scale(_rootMotion.DeltaPosition, PositionMultiplier);
             _deltaRotation = _deltaRotation * _rootMotion.DeltaRotation;
-        }
 
-        private void FixedUpdate()
-        {
-            if (_rigidbody.isKinematic)
-            {
-                _rigidbody.transform.position += _deltaPosition;
-                _rigidbody.transform.rotation *= _deltaRotation;
-            }
-            else
-            {
-                _rigidbody.MovePosition(_rigidbody.position + _deltaPosition);
-                _rigidbody.MoveRotation(_rigidbody.rotation * _deltaRotation);
-            }
+            _transform.position = _transform.position + _deltaPosition;
+            _transform.rotation = _transform.rotation * _deltaRotation;
 
             _deltaPosition = Vector3.zero;
             _deltaRotation = Quaternion.identity;
