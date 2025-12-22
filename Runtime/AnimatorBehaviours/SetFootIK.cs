@@ -12,6 +12,7 @@ namespace Moths.Animations.Behaviours
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             OnAnimatorIKInvoker ikInvoker = animator.GetComponent<OnAnimatorIKInvoker>();
+            if (!ikInvoker) return;
             ikInvoker.layerFootIKEnable[layerIndex] = applyFootIK;
         }
 
