@@ -36,15 +36,18 @@ namespace Moths.Animations
 
         private void FixedUpdate()
         {
-            if (_rigidbody.isKinematic)
+            if (_rigidbody)
             {
-                _rigidbody.transform.position += _deltaPosition;
-                _rigidbody.transform.rotation *= _deltaRotation;
-            }
-            else
-            {
-                _rigidbody.MovePosition(_rigidbody.position + _deltaPosition);
-                _rigidbody.MoveRotation(_rigidbody.rotation * _deltaRotation);
+                if (_rigidbody.isKinematic)
+                {
+                    _rigidbody.transform.position += _deltaPosition;
+                    _rigidbody.transform.rotation *= _deltaRotation;
+                }
+                else
+                {
+                    _rigidbody.MovePosition(_rigidbody.position + _deltaPosition);
+                    _rigidbody.MoveRotation(_rigidbody.rotation * _deltaRotation);
+                }
             }
 
             _deltaPosition = Vector3.zero;

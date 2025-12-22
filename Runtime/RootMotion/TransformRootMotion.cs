@@ -32,8 +32,11 @@ namespace Moths.Animations
             _deltaPosition += Vector3.Scale(_rootMotion.DeltaPosition, PositionMultiplier);
             _deltaRotation = _deltaRotation * _rootMotion.DeltaRotation;
 
-            _transform.position = _transform.position + _deltaPosition;
-            _transform.rotation = _transform.rotation * _deltaRotation;
+            if (_transform)
+            {
+                _transform.position = _transform.position + _deltaPosition;
+                _transform.rotation = _transform.rotation * _deltaRotation;
+            }
 
             _deltaPosition = Vector3.zero;
             _deltaRotation = Quaternion.identity;
