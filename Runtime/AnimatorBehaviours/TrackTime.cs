@@ -16,6 +16,8 @@ namespace Moths.Animations.Behaviours
 
             _controller = animator.GetComponent<IAnimator>();
 
+            if (_controller == null) return;
+
             var animation = _controller.GetCurrentAnimation(layerIndex);
             if (animation == null) return;
             if (!stateInfo.IsName(animation.stateName)) return;
@@ -25,6 +27,8 @@ namespace Moths.Animations.Behaviours
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            if (_controller == null) return;
+
             var animation = _controller.GetCurrentAnimation(layerIndex);
             if (animation == null) return;
             if (!stateInfo.IsName(animation.stateName)) return;
