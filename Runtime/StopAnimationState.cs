@@ -21,4 +21,21 @@ namespace Moths.Animations
             this.layer = layer;
         }
     }
+    public struct EmptyAnimationState : IAnimationState
+    {
+        public int layer { get; }
+
+
+        public string animID => "__EmptyID__";
+        public string stateName => "Empty";
+
+        public float duration => 0;
+
+        public IAnimationState[] combine => null;
+
+        public EmptyAnimationState(int layer)
+        {
+            this.layer = layer;
+        }
+    }
 }

@@ -33,7 +33,6 @@ namespace Moths.Animations
         private Animator _animator;
         private AnimatorLayer[] _layers;
         private bool[] _usedLayers;
-        private IAnimationState[] _statesArr = new IAnimationState[1];
         private Dictionary<int, List<AnimationQueue>> _queue = new Dictionary<int, List<AnimationQueue>>();
         private bool[] _currentPlayingQueue = null;
 
@@ -69,7 +68,7 @@ namespace Moths.Animations
             {
                 _layers[i].Update(_animator);
 
-                if (_usedLayers[i] == false || (_layers[i].playInfo.preserve && IsAnimationFinished(i)))
+                if (_usedLayers[i] == false || (i > 0 && IsAnimationFinished(i)))
                 {
                     _layers[i].Stop();
                     _usedLayers[i] = false;
@@ -278,6 +277,11 @@ namespace Moths.Animations
             if (state.layer >= _layers.Length) return false;
 
             return _layers[state.layer].IsPlaying(state);
+        }
+
+        public bool IsAnimationFinished(IAnimationState state)
+        {
+            return !IsPlaying(state) || IsAnimationFinished(state.layer);
         }
 
         public bool IsAnimationFinished(int layer)
