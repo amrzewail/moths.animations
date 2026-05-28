@@ -27,7 +27,7 @@ namespace Moths.Animations
         public IAnimationState DefaultAnimation => _defaultAnimation;
         public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
 
-        [SerializeField] AnimationState _defaultAnimation;
+        [SerializeField] AnimationStateAsset _defaultAnimation;
         [SerializeField] Constraint _lockPosition;
 
         private Animator _animator;

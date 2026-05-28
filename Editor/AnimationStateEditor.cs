@@ -9,7 +9,7 @@ namespace Moths.Animations.Editor
 {
     using Editor = UnityEditor.Editor;
 
-    [CustomEditor(typeof(AnimationState))]
+    [CustomEditor(typeof(AnimationStateAsset))]
     [CanEditMultipleObjects]
     public class AnimationStateEditor : Editor
     {
@@ -40,7 +40,7 @@ namespace Moths.Animations.Editor
             serializedObject.Update();
 
 
-            AnimationState instance = (AnimationState)target;
+            AnimationStateAsset instance = (AnimationStateAsset)target;
 
             AnimatorController animator = instance.animatorController;
 

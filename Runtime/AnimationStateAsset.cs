@@ -10,7 +10,7 @@ using Moths.Fields;
 namespace Moths.Animations
 {
     [CreateAssetMenu(fileName = "Animation State", menuName = "Moths/Animations/Animation State")]
-    public class AnimationState : ScriptableObject, IAnimationState
+    public class AnimationStateAsset : ScriptableObject, IAnimationState
     {
         [SerializeField] int _layer;
 

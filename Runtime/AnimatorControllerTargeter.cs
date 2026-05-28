@@ -23,7 +23,7 @@ namespace Moths.Animations.Internal
         public struct StateReference
         {
             public AnimatorState target;
-            public AnimationState state;
+            public AnimationStateAsset state;
         }
 
         [SerializeField] AnimatorController _animatorController;
@@ -47,7 +47,7 @@ namespace Moths.Animations.Internal
 
             RemoveDuplicates();
 
-            HashSet<AnimatorState> existingStates = new HashSet<AnimatorState>(); 
+            HashSet<AnimatorState> existingStates = new HashSet<AnimatorState>();
             for (int i = 0; i < _animatorController.layers.Length; i++)
             {
                 RefreshStates(i, _animatorController.layers[i].stateMachine, existingStates);
@@ -64,7 +64,7 @@ namespace Moths.Animations.Internal
 
             string assetPath = AssetDatabase.GetAssetPath(this);
 
-            HashSet<AnimationState> existingAnimations = _references.Select(r => r.state).ToHashSet();
+            HashSet<AnimationStateAsset> existingAnimations = _references.Select(r => r.state).ToHashSet();
             var childAssets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
 
             for (int i = 0; i < childAssets.Length; i++)
@@ -101,9 +101,9 @@ namespace Moths.Animations.Internal
             }
         }
 
-        private AnimationState FindState(AnimatorState state)
+        private AnimationStateAsset FindState(AnimatorState state)
         {
-            for (int i = 0; i < _references.Count; i++) 
+            for (int i = 0; i < _references.Count; i++)
             {
                 if (_references[i].target == state) return _references[i].state;
             }
@@ -123,23 +123,23 @@ namespace Moths.Animations.Internal
                 var animationState = FindState(state.state);
                 if (!animationState)
                 {
-                    animationState = ScriptableObject.CreateInstance<AnimationState>();
+                    animationState = ScriptableObject.CreateInstance<AnimationStateAsset>();
                     AssetDatabase.AddObjectToAsset(animationState, this);
                     _references.Add(new StateReference { target = state.state, state = animationState });
                     EditorUtility.SetDirty(this);
                 }
 
-                animationState.name = $"{state.state.name} ({layer})";
+                animationState.name = $"[{_animatorController.name}] {state.state.name} ({layer})";
 
-                FieldInfo animatorControllerField = typeof(AnimationState).GetField("_animatorController", BindingFlags.NonPublic | BindingFlags.Instance);
-                FieldInfo layerField = typeof(AnimationState).GetField("_layer", BindingFlags.NonPublic | BindingFlags.Instance);
-                FieldInfo stateNameField = typeof(AnimationState).GetField("_stateName", BindingFlags.NonPublic | BindingFlags.Instance);
-                FieldInfo durationField = typeof(AnimationState).GetField("_duration", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo animatorControllerField = typeof(AnimationStateAsset).GetField("_animatorController", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo layerField = typeof(AnimationStateAsset).GetField("_layer", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo stateNameField = typeof(AnimationStateAsset).GetField("_stateName", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo durationField = typeof(AnimationStateAsset).GetField("_duration", BindingFlags.NonPublic | BindingFlags.Instance);
 
                 animatorControllerField.SetValue(animationState, _animatorController);
                 layerField.SetValue(animationState, layer);
                 stateNameField.SetValue(animationState, state.state.name);
-                durationField.SetValue(animationState, AnimationState.CalculateDuration(state.state));
+                durationField.SetValue(animationState, AnimationStateAsset.CalculateDuration(state.state));
 
                 EditorUtility.SetDirty(animationState);
             }
