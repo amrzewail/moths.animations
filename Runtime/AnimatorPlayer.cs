@@ -372,9 +372,6 @@ namespace Moths.Animations
             {
                 if (!IsPlaying(state) || isAnimationFinished || info.forcePlay)
                 {
-
-                    Debug.Log("Play animation: " + state.StateName + " forcePlay: " + info.forcePlay + " finished: " + isAnimationFinished);
-
                     _playInfo = info;
                     animator.CrossFadeInFixedTime(state.StateName, info.blendTime, layer, state.Duration * info.normalizedTime);
                     animator.SetFloat("Speed", info.speed);
