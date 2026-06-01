@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.IMGUI.Controls;
@@ -10,7 +11,7 @@ namespace Moths.Animations
     public class AnimatorStateAdvancedDropdown : AdvancedDropdown
     {
         private readonly Action<AnimatorController, UnityEditor.Animations.AnimatorState, int> _onSelected;
-        private readonly Dictionary<AnimatorController, AnimatorStateReferences> _animators;
+        private readonly List<AnimatorController> _animatorsSorted;
 
         public class AnimatorStateItem : AdvancedDropdownItem
         {
@@ -28,7 +29,8 @@ namespace Moths.Animations
 
         public AnimatorStateAdvancedDropdown(AdvancedDropdownState state, Dictionary<AnimatorController, AnimatorStateReferences> animators, Action<AnimatorController, UnityEditor.Animations.AnimatorState, int> onSelected) : base(state)
         {
-            _animators = animators;
+            _animatorsSorted = animators.Keys.ToList();
+            _animatorsSorted.Sort((a, b) => a.name.CompareTo(b.name));
             _onSelected = onSelected;
             minimumSize = new Vector2(300, 300);
         }
@@ -37,9 +39,8 @@ namespace Moths.Animations
         {
             var root = new AdvancedDropdownItem("Animator States");
 
-            foreach (var pair in _animators)
+            foreach (var animator in _animatorsSorted)
             {
-                var animator = pair.Key;
                 var animatorItem = new AdvancedDropdownItem(animator.name)
                 {
                     icon = (Texture2D)EditorGUIUtility.IconContent("AnimatorController Icon").image
