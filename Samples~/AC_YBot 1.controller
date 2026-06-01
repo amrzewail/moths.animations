@@ -208,16 +208,19 @@ MonoBehaviour:
         state: {fileID: -4289703511907707032}
         layer: 0
         name: Big jajaj
+        fullPath: AC_YBot 1/Base Layer/Big jajaj
         duration: 2.3666668
     - key: 5358165343294481653
       value:
         state: {fileID: -4289703511907707032}
         layer: 0
         name: Big jajaj
+        fullPath: 
         duration: 2.3666668
     - key: 5000984316888614678
       value:
         state: {fileID: -5711756272614362826}
         layer: 0
         name: Hello darkness my old friend
+        fullPath: AC_YBot 1/Base Layer/Hello darkness my old friend
         duration: 0.033333335

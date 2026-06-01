@@ -54,7 +54,7 @@ namespace Moths.Animations
             for (int i = 0; i < states.Count; i++)
             {
                 var state = states[i];
-                string statePath = (stack.Count > 0 ? string.Join('/', stack) + "/" : "") + state.state.name;
+                string statePath = $"{layerName}/{(stack.Count > 0 ? string.Join('/', stack) + "/" : "") + state.state.name}";
                 foreach (var pair in references.states)
                 {
                     if (pair.value.state != state.state) continue;
@@ -62,7 +62,8 @@ namespace Moths.Animations
                     references.states[pair.key] = new()
                     {
                         state = state.state,
-                        name = statePath,
+                        name = state.state.name,
+                        fullPath = statePath,
                         layer = layer,
                         duration = state.state.motion != null ? state.state.motion.averageDuration / state.state.speed : 0,
                     };

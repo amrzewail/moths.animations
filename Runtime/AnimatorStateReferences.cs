@@ -20,6 +20,7 @@ namespace Moths.Animations
 #endif
             public int layer;
             public string name;
+            public string fullPath;
             public float duration;
         }
 

@@ -20,6 +20,8 @@ namespace Moths.Animations
         public static bool operator ==(AnimatorState left, AnimatorState right) => left.Equals(right);
         public static bool operator !=(AnimatorState left, AnimatorState right) => !left.Equals(right);
 
+        public static implicit operator bool(AnimatorState state) => state.IsValid;
+
         public AnimatorState(int layer, string stateName)
         {
             this = default;
@@ -43,6 +45,14 @@ namespace Moths.Animations
         public override int GetHashCode()
         {
             return HashCode.Combine(_layer, _stateName);
+        }
+
+        public override string ToString()
+        {
+#if UNITY_EDITOR
+            return $"[{_references.animator.name}] {StateName}";
+#endif
+            return StateName;
         }
     }
 }

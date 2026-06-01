@@ -20,6 +20,8 @@ namespace Moths.Animations
         public static bool ShouldFetchAnimators = false;
 
         private SerializedObject _serializedObject;
+        private GUIStyle richTextPopupStyle;
+
 
         private static void FetchAnimators()
         {
@@ -126,41 +128,34 @@ namespace Moths.Animations
             EditorGUI.BeginProperty(position, label, property);
 
             // Layout setup
-            Rect textRect = new Rect(position.x, position.y, position.width - 44, position.height);
+            Rect textRect = new Rect(position.x, position.y, position.width - 22, position.height);
             Rect dropdownRect = new Rect(position.x + position.width - 42, position.y, 20, position.height);
             Rect assetRect = new Rect(position.x + position.width - 20, position.y, 20, position.height);
 
-            // Text field
-            EditorGUI.BeginDisabledGroup(true);
             string text = name;
             string shortText = name;
 
             if (animatorController && !string.IsNullOrEmpty(name))
             {
-                if (animatorController.layers.Length > state.layer)
-                {
-                    text = $"{animatorController.layers[state.layer].name}/{text}";
-                }
-                text = $"{animatorController.name}/{text}";
-
-                shortText = $"{animatorController.name}/{name.Split('/').Last()}";
+                text = $"<color=cyan>{animatorController.name}</color>/{state.fullPath}";
+                shortText = $"<color=cyan>{animatorController.name}</color> {state.layer}) {name}";
             }
 
             bool isHovering = Event.current.type == EventType.Repaint && textRect.Contains(Event.current.mousePosition);
 
-            if (isHovering)
+            if (!isHovering)
             {
-                EditorGUI.TextField(textRect, label, text);
-            }
-            else
-            {
-                EditorGUI.TextField(textRect, label, shortText);
+                text = shortText;
             }
 
-            EditorGUI.EndDisabledGroup();
+            if (richTextPopupStyle == null)
+            {
+                richTextPopupStyle = new GUIStyle(EditorStyles.popup);
+                richTextPopupStyle.richText = true;
+            }
 
             // Dropdown button
-            if (GUI.Button(dropdownRect, "▾"))
+            if (GUI.Button(textRect, text, richTextPopupStyle))
             {
                 var dropdown = new AnimatorStateAdvancedDropdown(_dropdownState, _animators, (animator, selectedState, layer) =>
                 {
@@ -200,7 +195,7 @@ namespace Moths.Animations
             }
 
             // Asset select button
-            if (GUI.Button(assetRect, "▣"))
+            if (GUI.Button(assetRect, (Texture2D)EditorGUIUtility.IconContent("AnimatorController Icon").image))
             {
                 if (animatorController)
                 {

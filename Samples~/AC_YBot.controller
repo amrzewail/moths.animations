@@ -170,10 +170,12 @@ MonoBehaviour:
         state: {fileID: -5711756272614362826}
         layer: 0
         name: AnimAnim
+        fullPath: AC_YBot/Base Layer/AnimAnim
         duration: 0.033333335
     - key: 4752352308957373786
       value:
         state: {fileID: -4289703511907707032}
         layer: 0
         name: Big Jump
+        fullPath: AC_YBot/Base Layer/Big Jump
         duration: 2.3666668

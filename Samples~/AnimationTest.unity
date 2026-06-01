@@ -393,7 +393,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 990a326a45f66014f910880ef9e09271, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 3cbdb57119b7d3542b7f32a2315e419c, type: 2}
+      objectReference: {fileID: 9100000, guid: 502de1d7434df314c884ca29528913f3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -426,7 +426,7 @@ MonoBehaviour:
     _isEnabled: 1
     _value:
       _references: {fileID: 489009959667756636, guid: 502de1d7434df314c884ca29528913f3, type: 2}
-      _guid: 7e99b452-e787-48da-b288-48041025387f
+      _identifier: 4723808141813526236
   _lockPosition: 0
 --- !u!4 &1548184314 stripped
 Transform:
