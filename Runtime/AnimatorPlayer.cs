@@ -48,7 +48,7 @@ namespace Moths.Animations
         {
             if (!_animator) _animator = GetComponent<Animator>();
             _layers = new AnimatorLayer[_animator.layerCount];
-            for (int i = 0; i < _layers.Length; i++) _layers[i] = new AnimatorLayer();
+            for (int i = 0; i < _layers.Length; i++) _layers[i] = new AnimatorLayer(AnimationPlayInfo.Default);
 
             _usedLayers = new bool[layers.Length];
             _currentPlayingQueue = new bool[layers.Length];
@@ -339,6 +339,12 @@ namespace Moths.Animations
             public int currentFrame;
 
             public AnimationPlayInfo playInfo => _playInfo;
+
+            public AnimatorLayer(AnimationPlayInfo playInfo)
+            {
+                this = default;
+                _playInfo = playInfo;
+            }
 
             public void Update(Animator animator)
             {
