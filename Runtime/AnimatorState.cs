@@ -33,7 +33,7 @@ namespace Moths.Animations
 
         public bool Equals(AnimatorState other)
         {
-            if (!IsValid || !other.IsValid) return false;
+            if (!IsValid && !other.IsValid) return true;
             return Layer == other.Layer && StateName == other.StateName;
         }
 
