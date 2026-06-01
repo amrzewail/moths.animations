@@ -20,8 +20,6 @@ namespace Moths.Animations
         public static bool ShouldFetchAnimators = false;
 
         private SerializedObject _serializedObject;
-        private SerializedProperty _referencesProperty;
-        private SerializedProperty _guidProperty;
 
         private static void FetchAnimators()
         {
@@ -106,10 +104,10 @@ namespace Moths.Animations
             FetchAnimators();
 
             _serializedObject = property.serializedObject;
-            _guidProperty = property.FindPropertyRelative("_identifier");
-            _referencesProperty = property.FindPropertyRelative("_references");
+            var guidProperty = property.FindPropertyRelative("_identifier");
+            var referencesProperty = property.FindPropertyRelative("_references");
 
-            var references = (AnimatorStateReferences)_referencesProperty.objectReferenceValue;
+            var references = (AnimatorStateReferences)referencesProperty.objectReferenceValue;
 
             AnimatorController animatorController = null;
             SerializedAnimatorState state = default;
@@ -117,9 +115,9 @@ namespace Moths.Animations
             if (references)
             {
                 animatorController = references.animator;
-                if (references.states.ContainsKey(_guidProperty.longValue))
+                if (references.states.ContainsKey(guidProperty.longValue))
                 {
-                    state = references.states[_guidProperty.longValue];
+                    state = references.states[guidProperty.longValue];
                 }
             }
             
@@ -192,8 +190,8 @@ namespace Moths.Animations
                     EditorUtility.SetDirty(references);
                     AssetDatabase.SaveAssetIfDirty(references);
 
-                    _guidProperty.longValue = guid;
-                    _referencesProperty.objectReferenceValue = references;
+                    guidProperty.longValue = guid;
+                    referencesProperty.objectReferenceValue = references;
 
                     _serializedObject.ApplyModifiedProperties();
                 });
