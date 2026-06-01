@@ -23,23 +23,23 @@ namespace Moths.Animations
             public float duration;
         }
 
-        public SerializableDictionary<string, SerializedAnimatorState> states = new();
+        public SerializableDictionary<long, SerializedAnimatorState> states = new();
 
-        public int GetLayer(string guid)
+        public int GetLayer(long id)
         {
-            if (states.TryGetValue(guid, out var state)) return state.layer;
+            if (states.TryGetValue(id, out var state)) return state.layer;
             return -1;
         }
 
-        public string GetStateName(string guid)
+        public string GetStateName(long id)
         {
-            if (states.TryGetValue(guid, out var state)) return state.name;
+            if (states.TryGetValue(id, out var state)) return state.name;
             return string.Empty;
         }
 
-        public float GetDuration(string guid)
+        public float GetDuration(long id)
         {
-            if (states.TryGetValue(guid, out var state)) return state.duration;
+            if (states.TryGetValue(id, out var state)) return state.duration;
             return 0;
         }
     }

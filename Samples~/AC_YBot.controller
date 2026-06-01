@@ -165,19 +165,13 @@ MonoBehaviour:
   animator: {fileID: 9100000}
   states:
     _pairs:
-    - key: be749bd0-b5e2-4a85-a165-08640bd1cb97
+    - key: 0
       value:
         state: {fileID: -5711756272614362826}
         layer: 0
         name: AnimAnim
         duration: 0.033333335
-    - key: f293ed2a-b79d-4607-bf34-7c54eb8d52b5
-      value:
-        state: {fileID: -3261551394203225409}
-        layer: 0
-        name: Test
-        duration: 2.3666668
-    - key: 2356a343-e020-4f1a-8d16-8b44d6985f0e
+    - key: 4752352308957373786
       value:
         state: {fileID: -4289703511907707032}
         layer: 0

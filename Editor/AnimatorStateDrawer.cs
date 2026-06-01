@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.LightTransport;
 
 namespace Moths.Animations
 {
@@ -114,7 +115,7 @@ namespace Moths.Animations
 
                     var references = _animators[animator];
 
-                    string guid = string.Empty;
+                    long guid = 0;
 
                     foreach (var pair in references.states)
                     {
@@ -123,7 +124,7 @@ namespace Moths.Animations
                         break;
                     }
 
-                    if (string.IsNullOrEmpty(guid)) guid = Guid.NewGuid().ToString();
+                    if (guid == 0) guid = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
 
                     references.states[guid] = new()
                     {
@@ -136,7 +137,7 @@ namespace Moths.Animations
                     EditorUtility.SetDirty(references);
                     AssetDatabase.SaveAssetIfDirty(references);
 
-                    _guidProperty.stringValue = guid;
+                    _guidProperty.longValue = guid;
                     _referencesProperty.objectReferenceValue = references;
 
                     _serializedObject.ApplyModifiedProperties();
@@ -163,7 +164,7 @@ namespace Moths.Animations
             FetchAnimators();
 
             _serializedObject = property.serializedObject;
-            _guidProperty = property.FindPropertyRelative("_guid");
+            _guidProperty = property.FindPropertyRelative("_identifier");
             _referencesProperty = property.FindPropertyRelative("_references");
 
             var references = (AnimatorStateReferences)_referencesProperty.objectReferenceValue;
@@ -174,7 +175,7 @@ namespace Moths.Animations
             if (references)
             {
                 animatorController = references.animator;
-                state = references.states[_guidProperty.stringValue];
+                state = references.states[_guidProperty.longValue];
             }
             
             string name = string.IsNullOrEmpty(state.name) ? "" : state.name;
@@ -202,7 +203,7 @@ namespace Moths.Animations
 
             if (isHovering)
             {
-                EditorGUI.TextField(textRect, label, _guidProperty.stringValue);
+                EditorGUI.TextField(textRect, label, _guidProperty.longValue.ToString());
             }
             else
             {

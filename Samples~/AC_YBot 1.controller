@@ -203,93 +203,21 @@ MonoBehaviour:
   animator: {fileID: 9100000}
   states:
     _pairs:
-    - key: 2356a343-e020-4f1a-8d16-8b44d6985f0e
+    - key: 0
       value:
         state: {fileID: -4289703511907707032}
         layer: 0
         name: Big jajaj
         duration: 2.3666668
-    - key: be749bd0-b5e2-4a85-a165-08640bd1cb97
+    - key: 5358165343294481653
+      value:
+        state: {fileID: -4289703511907707032}
+        layer: 0
+        name: Big jajaj
+        duration: 2.3666668
+    - key: 5000984316888614678
       value:
         state: {fileID: -5711756272614362826}
         layer: 0
         name: Hello darkness my old friend
         duration: 0.033333335
-    - key: f293ed2a-b79d-4607-bf34-7c54eb8d52b5
-      value:
-        state: {fileID: -3261551394203225409}
-        layer: 0
-        name: Test
-        duration: 0.033333335
-    - key: 8915af9c-32c6-403d-835b-202cd78ba7a0
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 0c3bbc40-fa5c-498e-bb2e-a29e59252ef0
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 7d676609-46f7-410f-807f-708d8f8f6c0b
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: bc364a51-36c2-4881-b31d-caad84c30395
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 00ff6c65-cd21-4428-9433-94e2fcaaa0d2
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 5af7cfee-b311-45cb-b88d-02176bc34857
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 326ac718-2d99-4546-803e-941abb2993b5
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 5d3812c3-f2c4-4100-9e07-7661a6a7b7a7
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 22f393a8-12f6-49c7-9328-df01691cce58
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: 0fdcbe20-811e-4305-96a9-3da05c0605fa
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: a18595b3-55f1-49ab-ab90-4f7ae48f5e98
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
-    - key: a2f2035b-ed38-4aa5-ad69-090c516ce052
-      value:
-        state: {fileID: 6154315087202636875}
-        layer: 1
-        name: New State
-        duration: 0
