@@ -16,33 +16,36 @@ namespace Moths.Animations.Behaviours
 
             _controller = animator.GetComponent<IAnimator>();
 
+            if (_controller is not IAnimator.INormalizedTimeSetter setter) return;
+
             if (_controller == null) return;
 
             var animation = _controller.GetCurrentAnimation(layerIndex);
             if (animation == null) return;
-            if (!stateInfo.IsName(animation.stateName)) return;
+            if (!stateInfo.IsName(animation.StateName)) return;
 
-            _controller.SetNormalizedTime(layerIndex, 0);
+            setter.SetNormalizedTime(layerIndex, 0);
         }
 
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (_controller == null) return;
+            if (_controller is not IAnimator.INormalizedTimeSetter setter) return;
 
             var animation = _controller.GetCurrentAnimation(layerIndex);
             if (animation == null) return;
-            if (!stateInfo.IsName(animation.stateName)) return;
+            if (!stateInfo.IsName(animation.StateName)) return;
 
             float time = stateInfo.loop ? stateInfo.normalizedTime % 1.0f : Mathf.Clamp01(stateInfo.normalizedTime);
             if (_controller != null && time <= 1)
             {
                 if (time < 1 || stateInfo.loop)
                 {
-                    _controller.SetNormalizedTime(layerIndex, time);
+                    setter.SetNormalizedTime(layerIndex, time);
                 }
                 else if (time == 1 && !_invokedFinish)
                 {
-                    _controller.SetNormalizedTime(layerIndex, time);
+                    setter.SetNormalizedTime(layerIndex, time);
                     _invokedFinish = true;
                 }
             }

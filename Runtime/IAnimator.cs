@@ -63,33 +63,38 @@ namespace Moths.Animations
 
     public interface IAnimator
     {
-        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
+        internal interface INormalizedTimeSetter
+        {
+            public void SetNormalizedTime(int layer, float time);
+        }
 
-        public IAnimationState DefaultAnimation { get; }
+        public event Action<AnimatorState, AnimationPlayInfo> AnimationPlayed;
+
+        public Animator Animator { get; }
+        public AnimatorState DefaultAnimation { get; }
         public RootMotion RootMotion { get; }
 
         public AnimatorPlayer.Constraint PositionConstraints { get; set; }
 
-        public void Play(IAnimationState state);
+        public void Play(AnimatorState state);
 
-        public void Play(IAnimationState state, AnimationPlayInfo info);
+        public void Play(AnimatorState state, AnimationPlayInfo info);
 
-        public void Queue(IAnimationState state);
-        public void Queue(IAnimationState state, AnimationPlayInfo info);
+        public void Queue(AnimatorState state);
+        public void Queue(AnimatorState state, AnimationPlayInfo info);
 
         public void Stop(int layer);
 
         public void ClearQueue(int layer);
 
-        public bool IsPlaying(IAnimationState state);
+        public bool IsPlaying(AnimatorState state);
 
         public bool IsAnimationFinished(int layer);
 
         public float GetNormalizedTime(int layer);
 
-        public void SetNormalizedTime(int layer, float time);
 
-        public IAnimationState GetCurrentAnimation(int layer);
+        public AnimatorState GetCurrentAnimation(int layer);
 
         public void SetRootMotion(bool value);
 

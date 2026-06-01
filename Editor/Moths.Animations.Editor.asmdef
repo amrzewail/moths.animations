@@ -2,7 +2,8 @@
     "name": "Moths.Animations.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:273b482ba4229914a9fed4d3bc218077"
+        "GUID:273b482ba4229914a9fed4d3bc218077",
+        "GUID:3c4641a474dbe544aafa49297e96ae9e"
     ],
     "includePlatforms": [
         "Editor"

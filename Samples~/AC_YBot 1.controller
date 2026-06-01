@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AnimAnim
+  m_Name: Hello darkness my old friend
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -33,7 +33,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Big Jump
+  m_Name: Big jajaj
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -62,18 +62,15 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
+    m_State: {fileID: -4289703511907707032}
+    m_Position: {x: 230, y: 150, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: -5711756272614362826}
     m_Position: {x: 130, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3261551394203225409}
     m_Position: {x: 130, y: 310, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4289703511907707032}
-    m_Position: {x: 390, y: 240, z: 0}
-  m_ChildStateMachines:
-  - serializedVersion: 1
-    m_StateMachine: {fileID: -1794534106980357824}
-    m_Position: {x: 300, y: 110, z: 0}
+  m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
@@ -82,7 +79,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -5711756272614362826}
+  m_DefaultState: {fileID: -4289703511907707032}
 --- !u!1102 &-3261551394203225409
 AnimatorState:
   serializedVersion: 6
@@ -103,21 +100,24 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 0ff2465673d25f344a49e00819779a77, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 990a326a45f66014f910880ef9e09271, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1107 &-1794534106980357824
+--- !u!1107 &-2600136655639243308
 AnimatorStateMachine:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New StateMachine
-  m_ChildStates: []
+  m_Name: New Layer
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: 6154315087202636875}
+    m_Position: {x: 200, y: 190, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -127,14 +127,14 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -4289703511907707032}
+  m_DefaultState: {fileID: 6154315087202636875}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AC_YBot
+  m_Name: AC_YBot 1
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -150,6 +150,44 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
+    m_Name: New Layer
+    m_StateMachine: {fileID: -2600136655639243308}
+    m_Mask: {fileID: 0}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+--- !u!1102 &6154315087202636875
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New State
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &7092347785100886625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,21 +203,93 @@ MonoBehaviour:
   animator: {fileID: 9100000}
   states:
     _pairs:
+    - key: 2356a343-e020-4f1a-8d16-8b44d6985f0e
+      value:
+        state: {fileID: -4289703511907707032}
+        layer: 0
+        name: Big jajaj
+        duration: 2.3666668
     - key: be749bd0-b5e2-4a85-a165-08640bd1cb97
       value:
         state: {fileID: -5711756272614362826}
         layer: 0
-        name: AnimAnim
+        name: Hello darkness my old friend
         duration: 0.033333335
     - key: f293ed2a-b79d-4607-bf34-7c54eb8d52b5
       value:
         state: {fileID: -3261551394203225409}
         layer: 0
         name: Test
-        duration: 2.3666668
-    - key: 2356a343-e020-4f1a-8d16-8b44d6985f0e
+        duration: 0.033333335
+    - key: 8915af9c-32c6-403d-835b-202cd78ba7a0
       value:
-        state: {fileID: -4289703511907707032}
-        layer: 0
-        name: Big Jump
-        duration: 2.3666668
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 0c3bbc40-fa5c-498e-bb2e-a29e59252ef0
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 7d676609-46f7-410f-807f-708d8f8f6c0b
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: bc364a51-36c2-4881-b31d-caad84c30395
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 00ff6c65-cd21-4428-9433-94e2fcaaa0d2
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 5af7cfee-b311-45cb-b88d-02176bc34857
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 326ac718-2d99-4546-803e-941abb2993b5
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 5d3812c3-f2c4-4100-9e07-7661a6a7b7a7
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 22f393a8-12f6-49c7-9328-df01691cce58
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: 0fdcbe20-811e-4305-96a9-3da05c0605fa
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: a18595b3-55f1-49ab-ab90-4f7ae48f5e98
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0
+    - key: a2f2035b-ed38-4aa5-ad69-090c516ce052
+      value:
+        state: {fileID: 6154315087202636875}
+        layer: 1
+        name: New State
+        duration: 0

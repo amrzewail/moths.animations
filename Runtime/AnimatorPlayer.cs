@@ -1,16 +1,16 @@
+using Moths.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Moths.Animations
 {
-    public partial class AnimatorPlayer : MonoBehaviour, IAnimator
+    public partial class AnimatorPlayer : MonoBehaviour, IAnimator, IAnimator.INormalizedTimeSetter
     {
         private struct AnimationQueue
         {
-            public IAnimationState state;
+            public AnimatorState state;
             public AnimationPlayInfo info;
         }
 
@@ -20,14 +20,15 @@ namespace Moths.Animations
             None = 0, X = 1 << 0, Y = 1 << 1, Z = 1 << 2
         };
 
-        public event Action<IAnimationState, AnimationPlayInfo> AnimationPlayed;
+        public event Action<AnimatorState, AnimationPlayInfo> AnimationPlayed;
 
+        public Animator Animator => _animator;
         public AnimatorLayer[] layers => _layers;
         public RootMotion RootMotion { get; private set; }
-        public IAnimationState DefaultAnimation => _defaultAnimation;
+        public AnimatorState DefaultAnimation => _defaultAnimation;
         public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
 
-        [SerializeField] AnimationStateAsset _defaultAnimation;
+        [SerializeField] OptionalProperty<AnimatorState> _defaultAnimation;
         [SerializeField] Constraint _lockPosition;
 
         private Animator _animator;
@@ -51,12 +52,11 @@ namespace Moths.Animations
 
             _usedLayers = new bool[layers.Length];
             _currentPlayingQueue = new bool[layers.Length];
-
         }
 
         private void Start()
         {
-            if (DefaultAnimation != null)
+            if (_defaultAnimation)
             {
                 Play(DefaultAnimation);
             }
@@ -134,11 +134,11 @@ namespace Moths.Animations
             RootMotion = new RootMotion(_deltaPosition, _deltaRotation);
         }
 
-        private void PlayInternal(IAnimationState state, AnimationPlayInfo info, bool clearQueue)
+        private void PlayInternal(AnimatorState state, AnimationPlayInfo info, bool clearQueue)
         {
-            if (state.animID == "__StopID__")
+            if (state.StateName == "$__StopID__$")
             {
-                Stop(state.layer);
+                Stop(state.Layer);
                 return;
             }
 
@@ -151,25 +151,12 @@ namespace Moths.Animations
                 clearQueue = false;
             }
 
+            if (state.Layer >= _layers.Length) return;
 
-            if (state.combine == null)
+            var animLayer = _layers[state.Layer];
+            if (animLayer.Play(_animator, state.Layer, state, info))
             {
-                if (state.layer >= _layers.Length) return;
-
-                var animLayer = _layers[state.layer];
-                if (animLayer.Play(_animator, state.layer, state, info))
-                {
-                    AnimationPlayed?.Invoke(state, info);
-                }
-
-                return;
-            }
-
-            IAnimationState[] states = state.combine;
-
-            for (int i = 0; i < states.Length; i++)
-            {
-                PlayInternal(states[i], info, clearQueue);
+                AnimationPlayed?.Invoke(state, info);
             }
         }
 
@@ -180,20 +167,6 @@ namespace Moths.Animations
                 if (_layers[i].playInfo.preserve) continue;
                 _usedLayers[i] = false;
             }
-        }
-
-        private void AppendUsedLayers(IAnimationState state, bool[] layers, int iteration = 0)
-        {
-            int layerIndex = state.layer;
-            if (layerIndex >= layers.Length) return;
-            if (state.combine != null)
-            {
-                foreach (var s in state.combine)
-                {
-                    AppendUsedLayers(s, layers, ++iteration);
-                }
-            }
-            layers[layerIndex] = true;
         }
 
         public void ResetRootMotion(Transform transform)
@@ -213,30 +186,26 @@ namespace Moths.Animations
             _animator.applyRootMotion = value;
         }
 
-        public void PlayNoClearQueue(IAnimationState state, AnimationPlayInfo info)
+        public void PlayNoClearQueue(AnimatorState state, AnimationPlayInfo info)
         {
             if (!info.appendToLayers)
             {
                 ResetUsedLayers();
             }
-            AppendUsedLayers(state, _usedLayers);
-
             PlayInternal(state, info, false);
         }
 
-        public void Play(IAnimationState state)
+        public void Play(AnimatorState state)
         {
             Play(state, AnimationPlayInfo.Default);
         }
 
-        public void Play(IAnimationState state, AnimationPlayInfo info)
+        public void Play(AnimatorState state, AnimationPlayInfo info)
         {
             if (!info.appendToLayers)
             {
                 ResetUsedLayers();
             }
-            AppendUsedLayers(state, _usedLayers);
-
             PlayInternal(state, info, true);
         }
 
@@ -247,18 +216,18 @@ namespace Moths.Animations
             _animator.Play("Empty", layer);
         }
 
-        public void Queue(IAnimationState state)
+        public void Queue(AnimatorState state)
         {
             Queue(state, AnimationPlayInfo.Default);
         }
 
-        public void Queue(IAnimationState state, AnimationPlayInfo info)
+        public void Queue(AnimatorState state, AnimationPlayInfo info)
         {
-            if (!_queue.ContainsKey(state.layer))
+            if (!_queue.ContainsKey(state.Layer))
             {
-                _queue.Add(state.layer, new List<AnimationQueue>());
+                _queue.Add(state.Layer, new List<AnimationQueue>());
             }
-            _queue[state.layer].Add(new AnimationQueue
+            _queue[state.Layer].Add(new AnimationQueue
             {
                 state = state,
                 info = info
@@ -272,16 +241,16 @@ namespace Moths.Animations
             _currentPlayingQueue[layer] = false;
         }
 
-        public bool IsPlaying(IAnimationState state)
+        public bool IsPlaying(AnimatorState state)
         {
-            if (state.layer >= _layers.Length) return false;
+            if (state.Layer >= _layers.Length) return false;
 
-            return _layers[state.layer].IsPlaying(state);
+            return _layers[state.Layer].IsPlaying(state);
         }
 
-        public bool IsAnimationFinished(IAnimationState state)
+        public bool IsAnimationFinished(AnimatorState state)
         {
-            return !IsPlaying(state) || IsAnimationFinished(state.layer);
+            return !IsPlaying(state) || IsAnimationFinished(state.Layer);
         }
 
         public bool IsAnimationFinished(int layer)
@@ -301,26 +270,19 @@ namespace Moths.Animations
         public void SetNormalizedTime(int layer, float time)
         {
             if (layer >= _layers.Length) return;
-            if (_layers[layer].currentAnimation == null) return;
+            if (!_layers[layer].currentAnimation.IsValid) return;
             if (Mathf.Approximately(_animator.speed, 0)) return;
             _layers[layer].normalizedTime = time;
         }
 
-        public int GetCurrentFrame(int layer)
-        {
-            if (layer >= _layers.Length) return 0;
-
-            return _layers[layer].currentFrame;
-        }
-
-        public IAnimationState GetCurrentAnimation(int layer)
+        public AnimatorState GetCurrentAnimation(int layer)
         {
             if (_layers == null)
             {
                 Awake();
             }
 
-            if (layer >= _layers.Length) return null;
+            if (layer >= _layers.Length) return default;
 
             return _layers[layer].currentAnimation;
         }
@@ -364,16 +326,15 @@ namespace Moths.Animations
             return _animator.GetBoneTransform(bone);
         }
 
-        public class AnimatorLayer
+        public struct AnimatorLayer
         {
-            private AnimatorStateInfo _stateInfo;
-            private AnimationPlayInfo _playInfo = AnimationPlayInfo.Default;
+            private AnimationPlayInfo _playInfo;
             private float _currentSpeed;
             private bool _currentMirror;
             private bool _changedAnimation;
 
             public float normalizedTime;
-            public IAnimationState currentAnimation;
+            public AnimatorState currentAnimation;
             public bool isAnimationFinished;
             public int currentFrame;
 
@@ -382,7 +343,7 @@ namespace Moths.Animations
             public void Update(Animator animator)
             {
                 float normalizedExitTime = 1.0f;
-                if (currentAnimation != null) normalizedExitTime = (currentAnimation.duration - _playInfo.exitRangeSecs) / currentAnimation.duration;
+                if (currentAnimation.IsValid) normalizedExitTime = (currentAnimation.Duration - _playInfo.exitRangeSecs) / currentAnimation.Duration;
                 if (_changedAnimation && normalizedTime < normalizedExitTime)
                 {
                     _changedAnimation = false;
@@ -392,16 +353,15 @@ namespace Moths.Animations
                 currentFrame = Mathf.FloorToInt(normalizedTime * (animator.GetCurrentAnimatorStateInfo(0).length * 30));
             }
 
-            public bool Play(Animator animator, int layer, IAnimationState state, AnimationPlayInfo info)
+            public bool Play(Animator animator, int layer, AnimatorState state, AnimationPlayInfo info)
             {
                 if (!IsPlaying(state) || isAnimationFinished || info.forcePlay)
                 {
 
-                    Debug.Log("Play animation: " + state.stateName + " forcePlay: " + info.forcePlay + " finished: " + isAnimationFinished);
+                    Debug.Log("Play animation: " + state.StateName + " forcePlay: " + info.forcePlay + " finished: " + isAnimationFinished);
 
                     _playInfo = info;
-
-                    animator.CrossFadeInFixedTime(state.stateName, info.blendTime, layer, state.duration * info.normalizedTime);
+                    animator.CrossFadeInFixedTime(state.StateName, info.blendTime, layer, state.Duration * info.normalizedTime);
                     animator.SetFloat("Speed", info.speed);
                     _currentSpeed = info.speed;
                     animator.SetBool("Mirror", info.mirror);
@@ -433,13 +393,13 @@ namespace Moths.Animations
 
             public void Stop()
             {
-                currentAnimation = null;
+                currentAnimation = default;
             }
 
-            public bool IsPlaying(IAnimationState state)
+            public bool IsPlaying(AnimatorState state)
             {
-                if (currentAnimation == null) return false;
-                return currentAnimation.IsEqual(state);
+                if (!currentAnimation.IsValid) return false;
+                return currentAnimation.Equals(state);
             }
 
         }

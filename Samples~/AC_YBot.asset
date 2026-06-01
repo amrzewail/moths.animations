@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5679d59cdb1f6644785013279bffc9b3, type: 3}
-  m_Name: Big Jump (0)
+  m_Name: '[AC_YBot] Big Jump (0)'
   m_EditorClassIdentifier: Moths.Animations::Moths.Animations.AnimationState
   _layer: 0
   _animatorController: {fileID: 9100000, guid: 3cbdb57119b7d3542b7f32a2315e419c, type: 2}
