@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Moths.Animations
 {
@@ -153,8 +154,7 @@ namespace Moths.Animations
 
             if (state.Layer >= _layers.Length) return;
 
-            var animLayer = _layers[state.Layer];
-            if (animLayer.Play(_animator, state.Layer, state, info))
+            if (_layers[state.Layer].Play(_animator, state.Layer, state, info))
             {
                 AnimationPlayed?.Invoke(state, info);
             }
@@ -167,6 +167,13 @@ namespace Moths.Animations
                 if (_layers[i].playInfo.preserve) continue;
                 _usedLayers[i] = false;
             }
+        }
+
+        private void AppendUsedLayers(AnimatorState state, bool[] layers, int iteration = 0)
+        {
+            int layerIndex = state.Layer;
+            if (layerIndex >= layers.Length) return;
+            layers[layerIndex] = true;
         }
 
         public void ResetRootMotion(Transform transform)
@@ -192,6 +199,7 @@ namespace Moths.Animations
             {
                 ResetUsedLayers();
             }
+            AppendUsedLayers(state, _usedLayers);
             PlayInternal(state, info, false);
         }
 
@@ -206,6 +214,7 @@ namespace Moths.Animations
             {
                 ResetUsedLayers();
             }
+            AppendUsedLayers(state, _usedLayers);
             PlayInternal(state, info, true);
         }
 

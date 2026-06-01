@@ -126,6 +126,7 @@ namespace Moths.Animations
             string name = string.IsNullOrEmpty(state.name) ? "" : state.name;
 
             EditorGUI.BeginProperty(position, label, property);
+            position = EditorGUI.PrefixLabel(position, label);
 
             // Layout setup
             Rect textRect = new Rect(position.x, position.y, position.width - 22, position.height);
