@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.LightTransport;
 
 namespace Moths.Animations
 {
@@ -101,63 +99,7 @@ namespace Moths.Animations
             return newReferenceAsset;
         }
 
-        private void AddStateMachineToMenu(GenericMenu menu, AnimatorStateMachine stateMachine, AnimatorController animator, int layer, List<string> stack)
-        {
-            var states = stateMachine.states.ToList();
-
-            for (int i = 0; i < states.Count; i++)
-            {
-                var state = states[i];
-                string statePath = animator.name + '/' + animator.layers[layer].name + '/' + (stack.Count > 0 ? string.Join('/', stack) + "/" : "") + state.state.name;
-                menu.AddItem(new GUIContent(statePath), false, () =>
-                {
-                    if (!_animators[animator]) _animators[animator] = CreateAnimatorReferencesAsset(animator);
-
-                    var references = _animators[animator];
-
-                    long guid = 0;
-
-                    foreach (var pair in references.states)
-                    {
-                        if (pair.value.state != state.state) continue;
-                        guid = pair.key;
-                        break;
-                    }
-
-                    if (guid == 0) guid = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
-
-                    references.states[guid] = new()
-                    {
-                        state = state.state,
-                        name = state.state.name,
-                        layer = layer,
-                        duration = state.state.motion != null ? state.state.motion.averageDuration / state.state.speed : 0,
-                    };
-
-                    EditorUtility.SetDirty(references);
-                    AssetDatabase.SaveAssetIfDirty(references);
-
-                    _guidProperty.longValue = guid;
-                    _referencesProperty.objectReferenceValue = references;
-
-                    _serializedObject.ApplyModifiedProperties();
-
-                });
-            }
-
-            var machines = stateMachine.stateMachines;
-
-
-            for (int i = 0; i < machines.Length; i++)
-            {
-                stack.Add(machines[i].stateMachine.name);
-
-                AddStateMachineToMenu(menu, machines[i].stateMachine, animator, layer, stack);
-
-                stack.RemoveAt(stack.Count - 1);
-            }
-
-        }
+        private static UnityEditor.IMGUI.Controls.AdvancedDropdownState _dropdownState = new();
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -175,7 +117,10 @@ namespace Moths.Animations
             if (references)
             {
                 animatorController = references.animator;
-                state = references.states[_guidProperty.longValue];
+                if (references.states.ContainsKey(_guidProperty.longValue))
+                {
+                    state = references.states[_guidProperty.longValue];
+                }
             }
             
             string name = string.IsNullOrEmpty(state.name) ? "" : state.name;
@@ -190,24 +135,28 @@ namespace Moths.Animations
             // Text field
             EditorGUI.BeginDisabledGroup(true);
             string text = name;
+            string shortText = name;
 
-            if (animatorController)
+            if (animatorController && !string.IsNullOrEmpty(name))
             {
                 if (animatorController.layers.Length > state.layer)
                 {
                     text = $"{animatorController.layers[state.layer].name}/{text}";
                 }
                 text = $"{animatorController.name}/{text}";
+
+                shortText = $"{animatorController.name}/{name.Split('/').Last()}";
             }
+
             bool isHovering = Event.current.type == EventType.Repaint && textRect.Contains(Event.current.mousePosition);
 
             if (isHovering)
             {
-                EditorGUI.TextField(textRect, label, _guidProperty.longValue.ToString());
+                EditorGUI.TextField(textRect, label, text);
             }
             else
             {
-                EditorGUI.TextField(textRect, label, text);
+                EditorGUI.TextField(textRect, label, shortText);
             }
 
             EditorGUI.EndDisabledGroup();
@@ -215,25 +164,41 @@ namespace Moths.Animations
             // Dropdown button
             if (GUI.Button(dropdownRect, "▾"))
             {
-                GenericMenu menu = new GenericMenu();
+                var dropdown = new AnimatorStateAdvancedDropdown(_dropdownState, _animators, (animator, selectedState, layer) =>
+                {
+                    if (!_animators[animator]) _animators[animator] = CreateAnimatorReferencesAsset(animator);
 
-                if (_animators.Count == 0)
-                {
-                    menu.AddDisabledItem(new GUIContent("No AnimatorControllers found."));
-                }
-                else
-                {
-                    foreach(var pair in _animators)
+                    var references = _animators[animator];
+
+                    long guid = 0;
+
+                    foreach (var pair in references.states)
                     {
-                        var animator = pair.Key;
-                        for (int i = 0; i < animator.layers.Length; i++)
-                        {
-                            AddStateMachineToMenu(menu, animator.layers[i].stateMachine, animator, i, new List<string>());
-                        }
+                        if (pair.value.state != selectedState) continue;
+                        guid = pair.key;
+                        break;
                     }
 
-                }
-                menu.DropDown(dropdownRect);
+                    if (guid == 0) guid = BitConverter.ToInt64(Guid.NewGuid().ToByteArray(), 0);
+
+                    references.states[guid] = new()
+                    {
+                        state = selectedState,
+                        name = selectedState.name,
+                        layer = layer,
+                        duration = selectedState.motion != null ? selectedState.motion.averageDuration / selectedState.speed : 0,
+                    };
+
+                    EditorUtility.SetDirty(references);
+                    AssetDatabase.SaveAssetIfDirty(references);
+
+                    _guidProperty.longValue = guid;
+                    _referencesProperty.objectReferenceValue = references;
+
+                    _serializedObject.ApplyModifiedProperties();
+                });
+
+                dropdown.Show(dropdownRect);
             }
 
             // Asset select button
