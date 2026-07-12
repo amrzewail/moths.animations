@@ -220,7 +220,7 @@ namespace Moths.Animations
         {
             _layers[layer].Stop();
             _usedLayers[layer] = false;
-            _animator.Play("Empty", layer);
+            //_animator.Play("Empty", layer);
         }
 
         public void Queue(AnimatorState state)
