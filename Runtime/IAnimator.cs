@@ -89,6 +89,7 @@ namespace Moths.Animations
 
         public bool IsPlaying(AnimatorState state);
 
+        public bool IsAnimationFinished(AnimatorState state);
         public bool IsAnimationFinished(int layer);
 
         public float GetNormalizedTime(int layer);
