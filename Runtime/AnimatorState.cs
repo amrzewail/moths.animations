@@ -44,7 +44,7 @@ namespace Moths.Animations
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_layer, _stateName);
+            return HashCode.Combine(Layer, StateName);
         }
 
         public override string ToString()
