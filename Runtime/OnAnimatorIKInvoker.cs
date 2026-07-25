@@ -9,7 +9,7 @@ namespace Moths.Animations
     {
         [SerializeField] Transform root;
 
-        private List<IOnAnimatorIKListener> _listeners = new List<IOnAnimatorIKListener>();
+        private List<IAnimatorIKListener> _listeners = new List<IAnimatorIKListener>();
 
         public Dictionary<int, bool> layerFootIKEnable = new Dictionary<int, bool>();
 
@@ -18,31 +18,27 @@ namespace Moths.Animations
             root = transform.parent;
         }
 
-        // Start is called before the first frame update
         void Awake()
         {
-            _listeners = root.GetComponentsInChildren<IOnAnimatorIKListener>().ToList();
+            _listeners = root.GetComponentsInChildren<IAnimatorIKListener>().ToList();
         }
 
-        // Update is called once per frame
         void OnAnimatorIK(int layerIndex)
         {
-            bool canInvoke = true;
+            bool footIK = true;
 
             foreach (var enable in layerFootIKEnable)
             {
                 if (enable.Value == false)
                 {
-                    canInvoke = false;
+                    footIK = false;
                     break;
                 }
             }
 
-            if (!canInvoke) return;
-
             for (int i = 0; i < _listeners.Count; i++)
             {
-                _listeners[i].OnAnimatorIKHandle(layerIndex);
+                _listeners[i].OnAnimatorIKHandle(layerIndex, footIK);
             }
         }
     }
