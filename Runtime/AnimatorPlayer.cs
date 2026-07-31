@@ -23,9 +23,12 @@ namespace Moths.Animations
 
         public Animator Animator => _animator;
         public AnimatorLayer[] layers => _layers;
-        public RootMotion RootMotion { get; private set; }
+        public RootMotion RootMotion { get; protected set; }
         public AnimatorState DefaultAnimation => _defaultAnimation;
         public Constraint PositionConstraints { get => _lockPosition; set => _lockPosition = value; }
+
+        protected Vector3 _deltaPosition = Vector3.zero;
+        protected Quaternion _deltaRotation = Quaternion.identity;
 
         [SerializeField] OptionalProperty<AnimatorState> _defaultAnimation;
         [SerializeField] Constraint _lockPosition;
@@ -35,9 +38,6 @@ namespace Moths.Animations
         private bool[] _usedLayers;
         private Dictionary<int, List<AnimationQueue>> _queue = new Dictionary<int, List<AnimationQueue>>();
         private bool[] _currentPlayingQueue = null;
-
-        private Vector3 _deltaPosition = Vector3.zero;
-        private Quaternion _deltaRotation = Quaternion.identity;
 
         private float _animatorSpeed = 1;
         private float _isPausedSpeed = 1;
@@ -107,30 +107,34 @@ namespace Moths.Animations
                 }
             }
         }
-        void OnAnimatorMove()
+        protected void OnAnimatorMove()
         {
-            Quaternion deltaRotation = _animator.deltaRotation;
-            Vector3 deltaPosition = _animator.deltaPosition;
+            _deltaPosition = Animator.deltaPosition;
+            _deltaRotation = Animator.deltaRotation;
 
-            _deltaPosition = deltaPosition;
-            _deltaRotation = deltaRotation;
+            _deltaPosition = ApplyDeltaPositionConstraints(_deltaPosition);
 
+            RootMotion = new RootMotion(_deltaPosition, _deltaRotation);
+        }
+
+        protected Vector3 ApplyDeltaPositionConstraints(Vector3 deltaPosition)
+        {
             if ((_lockPosition & Constraint.X) != 0)
             {
-                _deltaPosition -= transform.right * Vector3.Dot(transform.right, _deltaPosition);
+                deltaPosition -= transform.right * Vector3.Dot(transform.right, deltaPosition);
             }
 
             if ((_lockPosition & Constraint.Y) != 0)
             {
-                _deltaPosition -= transform.up * Vector3.Dot(transform.up, _deltaPosition);
+                deltaPosition -= transform.up * Vector3.Dot(transform.up, deltaPosition);
             }
 
             if ((_lockPosition & Constraint.Z) != 0)
             {
-                _deltaPosition -= transform.forward * Vector3.Dot(transform.forward, _deltaPosition);
+                deltaPosition -= transform.forward * Vector3.Dot(transform.forward, deltaPosition);
             }
 
-            RootMotion = new RootMotion(_deltaPosition, _deltaRotation);
+            return deltaPosition;
         }
 
         private void PlayInternal(AnimatorState state, AnimationPlayInfo info, bool clearQueue)
