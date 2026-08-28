@@ -12,6 +12,13 @@ namespace Moths.Animations
 #if UNITY_EDITOR
         public AnimatorController animator;
 #endif
+        [SerializeField] RuntimeAnimatorController _runtimeAnimatorController;
+        public RuntimeAnimatorController RuntimeAnimatorController
+        {
+            get => _runtimeAnimatorController;
+            set => _runtimeAnimatorController = value;
+        }
+
         [System.Serializable]
         public struct SerializedAnimatorState
         {

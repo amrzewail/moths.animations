@@ -89,6 +89,7 @@ namespace Moths.Animations
             AnimatorStateReferences newReferenceAsset = ScriptableObject.CreateInstance<AnimatorStateReferences>();
             newReferenceAsset.name = "State References"; // This is the name that will show up in the Project window
             newReferenceAsset.animator = animator;
+            newReferenceAsset.RuntimeAnimatorController = animator;
 
             // 4. Attach it as a sub-asset to the main AnimatorController
             AssetDatabase.AddObjectToAsset(newReferenceAsset, animator);

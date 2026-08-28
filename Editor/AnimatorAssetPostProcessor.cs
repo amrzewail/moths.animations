@@ -35,6 +35,7 @@ namespace Moths.Animations
                         if (referencesAsset != null)
                         {
                             referencesAsset.animator = animator;
+                            referencesAsset.RuntimeAnimatorController = animator;
 
                             for (int i = 0; i < animator.layers.Length; i++) UpdateStateReferences(referencesAsset, animator.layers[i].stateMachine, i, new());
 

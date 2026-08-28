@@ -34,6 +34,7 @@ namespace Moths.Animations
         [SerializeField] Constraint _lockPosition;
 
         private Animator _animator;
+        private int _currentLayerCount;
         private AnimatorLayer[] _layers;
         private bool[] _usedLayers;
         private Dictionary<int, List<AnimationQueue>> _queue = new Dictionary<int, List<AnimationQueue>>();
@@ -46,9 +47,9 @@ namespace Moths.Animations
         private void Awake()
         {
             if (!_animator) _animator = GetComponent<Animator>();
-            _layers = new AnimatorLayer[_animator.layerCount];
+            _currentLayerCount = _animator.layerCount;
+            _layers = new AnimatorLayer[128];
             for (int i = 0; i < _layers.Length; i++) _layers[i] = new AnimatorLayer(AnimationPlayInfo.Default);
-
             _usedLayers = new bool[layers.Length];
             _currentPlayingQueue = new bool[layers.Length];
         }
@@ -63,7 +64,7 @@ namespace Moths.Animations
 
         private void LateUpdate()
         {
-            for (int i = 0; i < _layers.Length; i++)
+            for (int i = 0; i < _currentLayerCount; i++)
             {
                 _layers[i].Update(_animator);
 
@@ -145,16 +146,28 @@ namespace Moths.Animations
                 return;
             }
 
+            if (state.RuntimeAnimatorController && _animator.runtimeAnimatorController != state.RuntimeAnimatorController)
+            {
+                _animator.runtimeAnimatorController = state.RuntimeAnimatorController;
+                _currentLayerCount = _animator.layerCount;
+                for (int i = 0; i < _currentLayerCount; i++)
+                {
+                    _layers[i] = new AnimatorLayer(AnimationPlayInfo.Default);
+                    _usedLayers[i] = false;
+                    _currentPlayingQueue[i] = false;
+                }
+            }
+
             if (clearQueue)
             {
-                for (int i = 0; i < _layers.Length; i++)
+                for (int i = 0; i < _currentLayerCount; i++)
                 {
                     ClearQueue(i);
                 }
                 clearQueue = false;
             }
 
-            if (state.Layer >= _layers.Length) return;
+            if (state.Layer >= _currentLayerCount) return;
 
             if (_layers[state.Layer].Play(_animator, state.Layer, state, info))
             {
@@ -164,7 +177,7 @@ namespace Moths.Animations
 
         private void ResetUsedLayers()
         {
-            for (int i = 0; i < _layers.Length; i++)
+            for (int i = 0; i < _currentLayerCount; i++)
             {
                 if (_layers[i].playInfo.preserve) continue;
                 _usedLayers[i] = false;
@@ -174,7 +187,7 @@ namespace Moths.Animations
         private void AppendUsedLayers(AnimatorState state, bool[] layers, int iteration = 0)
         {
             int layerIndex = state.Layer;
-            if (layerIndex >= layers.Length) return;
+            if (layerIndex >= _currentLayerCount) return;
             layers[layerIndex] = true;
         }
 

@@ -16,6 +16,7 @@ namespace Moths.Animations
         public string StateName => _references ? _references.GetStateName(_identifier) : _stateName;
         public float Duration => _references ? _references.GetDuration(_identifier) : 0;
         public bool IsValid => !string.IsNullOrEmpty(StateName) && Duration > 0;
+        public RuntimeAnimatorController RuntimeAnimatorController => _references ? _references.RuntimeAnimatorController : null;
 
         public static bool operator ==(AnimatorState left, AnimatorState right) => left.Equals(right);
         public static bool operator !=(AnimatorState left, AnimatorState right) => !left.Equals(right);
